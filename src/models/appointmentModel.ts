@@ -3,6 +3,12 @@ import { APPOINTMENT_STATUSES } from "@src/constants/appointmentConstants";
 
 const appointmentSchema = new Schema(
   {
+    appointmentNumber: {
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
+    },
     patient: {
       type: Schema.Types.ObjectId,
       ref: "Patient",

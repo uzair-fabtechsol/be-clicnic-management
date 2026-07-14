@@ -3,6 +3,7 @@ import OpdSlipModel from "@src/models/opdSlipModel";
 import PatientModel from "@src/models/patientModel";
 import DoctorModel from "@src/models/doctorModel";
 import AppError from "@src/utils/appError";
+import generateOpdSlipNumber from "@src/utils/opdSlipUtils";
 import type {
   CreateOpdSlipBody,
   UpdateOpdSlipBody,
@@ -28,8 +29,10 @@ const createOpdSlipService = async (body: CreateOpdSlipBody) => {
 
   const previousSlipCount = await OpdSlipModel.countDocuments({ patient });
   const visitType = previousSlipCount === 0 ? "new" : "followUp";
+  const opdSlipNumber = await generateOpdSlipNumber();
 
   const opdSlip = await OpdSlipModel.create({
+    opdSlipNumber,
     patient,
     doctor,
     visitType,

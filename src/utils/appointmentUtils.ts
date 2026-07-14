@@ -1,5 +1,8 @@
 import type { DAYS } from "@src/constants/doctorConstants";
 import type { DoctorType } from "@src/models/doctorModel";
+import AppointmentModel from "@src/models/appointmentModel";
+import generateUniqueNumber from "@src/utils/generateUniqueNumber";
+import { APPOINTMENT_NUMBER_DIGITS } from "@src/constants/appointmentConstants";
 
 const WEEKDAYS_BY_INDEX = [
   "Sunday",
@@ -29,4 +32,12 @@ const isDoctorAvailableAtSlot = (
   );
 };
 
-export { getDayName, isDoctorAvailableAtSlot };
+const generateAppointmentNumber = (): Promise<string> =>
+  generateUniqueNumber(
+    "APT",
+    APPOINTMENT_NUMBER_DIGITS,
+    (appointmentNumber) =>
+      AppointmentModel.exists({ appointmentNumber }).then(Boolean)
+  );
+
+export { getDayName, isDoctorAvailableAtSlot, generateAppointmentNumber };

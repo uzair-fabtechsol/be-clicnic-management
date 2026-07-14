@@ -3,7 +3,10 @@ import AppointmentModel from "@src/models/appointmentModel";
 import PatientModel from "@src/models/patientModel";
 import DoctorModel from "@src/models/doctorModel";
 import AppError from "@src/utils/appError";
-import { isDoctorAvailableAtSlot } from "@src/utils/appointmentUtils";
+import {
+  isDoctorAvailableAtSlot,
+  generateAppointmentNumber,
+} from "@src/utils/appointmentUtils";
 import type {
   CreateAppointmentBody,
   UpdateAppointmentBody,
@@ -74,7 +77,10 @@ const createAppointmentService = async (body: CreateAppointmentBody) => {
 
   await ensureDoctorAvailable(doctor, date, time);
 
+  const appointmentNumber = await generateAppointmentNumber();
+
   const appointment = await AppointmentModel.create({
+    appointmentNumber,
     patient,
     doctor,
     date,

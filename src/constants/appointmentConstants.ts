@@ -1,3 +1,5 @@
 const APPOINTMENT_STATUSES = ["scheduled", "canceled"] as const;
 
-export { APPOINTMENT_STATUSES };
+const APPOINTMENT_NUMBER_DIGITS = 8;
+
+export { APPOINTMENT_STATUSES, APPOINTMENT_NUMBER_DIGITS };

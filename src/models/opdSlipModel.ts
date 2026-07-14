@@ -3,6 +3,12 @@ import { VISIT_TYPES, PAYMENT_METHODS } from "@src/constants/opdSlipConstants";
 
 const opdSlipSchema = new Schema(
   {
+    opdSlipNumber: {
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
+    },
     patient: {
       type: Schema.Types.ObjectId,
       ref: "Patient",
