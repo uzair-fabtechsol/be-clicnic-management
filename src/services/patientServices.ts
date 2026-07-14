@@ -2,6 +2,7 @@ import PatientModel from "@src/models/patientModel";
 import AppError from "@src/utils/appError";
 import escapeRegex from "@src/utils/escapeRegex";
 import generateMrNumber from "@src/utils/patientUtils";
+import recordAuditLog from "@src/utils/auditLog";
 import type {
   CreatePatientBody,
   UpdatePatientBody,
@@ -9,10 +10,20 @@ import type {
 } from "@src/types/patientTypes";
 import type { Pagination } from "@src/utils/sendResponse";
 
-const createPatientService = async (body: CreatePatientBody) => {
+const createPatientService = async (
+  body: CreatePatientBody,
+  performedBy: string
+) => {
   const mrNumber = await generateMrNumber();
 
   const patient = await PatientModel.create({ ...body, mrNumber });
+
+  await recordAuditLog(
+    "patientCreated",
+    performedBy,
+    patient.mrNumber,
+    `Patient ${patient.name} was registered with MR number ${patient.mrNumber}`
+  );
 
   return { patient };
 };

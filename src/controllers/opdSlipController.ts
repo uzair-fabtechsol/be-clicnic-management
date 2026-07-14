@@ -17,8 +17,9 @@ import type {
 const createOpdSlip = catchAsync(
   async (req: Request, res: Response): Promise<void> => {
     const body = req.body as CreateOpdSlipBody;
+    const performedBy = req.user!._id;
 
-    const data = await createOpdSlipService(body);
+    const data = await createOpdSlipService(body, performedBy);
 
     sendResponse(res, 201, {
       status: "success",

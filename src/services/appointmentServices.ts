@@ -7,6 +7,7 @@ import {
   isDoctorAvailableAtSlot,
   generateAppointmentNumber,
 } from "@src/utils/appointmentUtils";
+import recordAuditLog from "@src/utils/auditLog";
 import type {
   CreateAppointmentBody,
   UpdateAppointmentBody,
@@ -221,7 +222,10 @@ const deleteAppointmentService = async (
   }
 };
 
-const cancelAppointmentService = async (appointmentId: string) => {
+const cancelAppointmentService = async (
+  appointmentId: string,
+  performedBy: string
+) => {
   const appointment = await AppointmentModel.findById(appointmentId);
 
   if (!appointment) {
@@ -234,6 +238,18 @@ const cancelAppointmentService = async (appointmentId: string) => {
 
   appointment.status = "canceled";
   await appointment.save();
+
+  const [patientDoc, doctorDoc] = await Promise.all([
+    PatientModel.findById(appointment.patient),
+    DoctorModel.findById(appointment.doctor),
+  ]);
+
+  await recordAuditLog(
+    "appointmentCancelled",
+    performedBy,
+    appointment.appointmentNumber,
+    `Appointment ${appointment.appointmentNumber} for ${patientDoc?.name ?? "unknown patient"} with ${doctorDoc?.name ?? "unknown doctor"} was cancelled`
+  );
 
   return { appointment };
 };

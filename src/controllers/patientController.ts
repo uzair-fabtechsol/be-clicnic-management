@@ -17,8 +17,9 @@ import type {
 const createPatient = catchAsync(
   async (req: Request, res: Response): Promise<void> => {
     const body = req.body as CreatePatientBody;
+    const performedBy = req.user!._id;
 
-    const data = await createPatientService(body);
+    const data = await createPatientService(body, performedBy);
 
     sendResponse(res, 201, {
       status: "success",

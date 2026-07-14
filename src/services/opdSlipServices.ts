@@ -4,6 +4,7 @@ import PatientModel from "@src/models/patientModel";
 import DoctorModel from "@src/models/doctorModel";
 import AppError from "@src/utils/appError";
 import generateOpdSlipNumber from "@src/utils/opdSlipUtils";
+import recordAuditLog from "@src/utils/auditLog";
 import type {
   CreateOpdSlipBody,
   UpdateOpdSlipBody,
@@ -11,19 +12,22 @@ import type {
 } from "@src/types/opdSlipTypes";
 import type { Pagination } from "@src/utils/sendResponse";
 
-const createOpdSlipService = async (body: CreateOpdSlipBody) => {
+const createOpdSlipService = async (
+  body: CreateOpdSlipBody,
+  performedBy: string
+) => {
   const { patient, doctor, paymentMethod, symptomsAndRemarks } = body;
 
-  const [patientExists, doctorExists] = await Promise.all([
-    PatientModel.exists({ _id: patient }),
-    DoctorModel.exists({ _id: doctor }),
+  const [patientDoc, doctorDoc] = await Promise.all([
+    PatientModel.findById(patient),
+    DoctorModel.findById(doctor),
   ]);
 
-  if (!patientExists) {
+  if (!patientDoc) {
     throw new AppError(404, "Patient not found");
   }
 
-  if (!doctorExists) {
+  if (!doctorDoc) {
     throw new AppError(404, "Doctor not found");
   }
 
@@ -39,6 +43,13 @@ const createOpdSlipService = async (body: CreateOpdSlipBody) => {
     paymentMethod,
     symptomsAndRemarks,
   });
+
+  await recordAuditLog(
+    "opdSlipGenerated",
+    performedBy,
+    opdSlip.opdSlipNumber,
+    `OPD slip generated for ${patientDoc.name} with ${doctorDoc.name}`
+  );
 
   return { opdSlip };
 };

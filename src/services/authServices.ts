@@ -7,6 +7,7 @@ import {
   generateAccessToken,
   generateRefreshToken,
 } from "@src/utils/generateAuthTokens";
+import recordAuditLog from "@src/utils/auditLog";
 import type { SignInBody } from "@src/types/authTypes";
 
 const signInService = async (body: SignInBody) => {
@@ -18,6 +19,13 @@ const signInService = async (body: SignInBody) => {
 
   const accessToken = generateAccessToken(user._id.toString());
   const refreshToken = generateRefreshToken(user._id.toString());
+
+  await recordAuditLog(
+    "userLogin",
+    user._id.toString(),
+    "System",
+    `User ${user.fullName} logged in`
+  );
 
   const { password: _password, ...safeUser } = user.toObject();
 

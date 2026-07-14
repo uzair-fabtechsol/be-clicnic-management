@@ -89,8 +89,9 @@ const deleteAppointment = catchAsync(
 const cancelAppointment = catchAsync(
   async (req: Request, res: Response): Promise<void> => {
     const appointmentId = req.params.id as string;
+    const performedBy = req.user!._id;
 
-    const data = await cancelAppointmentService(appointmentId);
+    const data = await cancelAppointmentService(appointmentId, performedBy);
 
     sendResponse(res, 200, {
       status: "success",

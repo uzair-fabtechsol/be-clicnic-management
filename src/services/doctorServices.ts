@@ -1,6 +1,7 @@
 import DoctorModel from "@src/models/doctorModel";
 import AppError from "@src/utils/appError";
 import escapeRegex from "@src/utils/escapeRegex";
+import recordAuditLog from "@src/utils/auditLog";
 import type {
   CreateDoctorBody,
   UpdateDoctorBody,
@@ -8,8 +9,18 @@ import type {
 } from "@src/types/doctorTypes";
 import type { Pagination } from "@src/utils/sendResponse";
 
-const createDoctorService = async (body: CreateDoctorBody) => {
+const createDoctorService = async (
+  body: CreateDoctorBody,
+  performedBy: string
+) => {
   const doctor = await DoctorModel.create(body);
+
+  await recordAuditLog(
+    "doctorAdded",
+    performedBy,
+    doctor.name,
+    `Doctor ${doctor.name} (${doctor.specialization}) was added`
+  );
 
   return { doctor };
 };
