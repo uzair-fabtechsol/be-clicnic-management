@@ -1,6 +1,7 @@
 import { z } from "zod";
 import mongoose from "mongoose";
 import { timeStringToDate } from "@src/utils/time";
+import { APPOINTMENT_STATUSES } from "@src/constants/appointmentConstants";
 
 const TIME_REGEX = /^([01]\d|2[0-3]):[0-5]\d$/;
 
@@ -35,6 +36,7 @@ const getAppointmentsQuerySchema = z.object({
   patient: objectIdSchema.optional(),
   doctor: objectIdSchema.optional(),
   date: z.coerce.date().optional(),
+  status: z.enum(APPOINTMENT_STATUSES).optional(),
 });
 
 export {

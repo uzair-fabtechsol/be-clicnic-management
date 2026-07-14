@@ -1,4 +1,5 @@
 import { model, models, Schema, type InferSchemaType } from "mongoose";
+import { APPOINTMENT_STATUSES } from "@src/constants/appointmentConstants";
 
 const appointmentSchema = new Schema(
   {
@@ -24,6 +25,11 @@ const appointmentSchema = new Schema(
       type: String,
       default: null,
       trim: true,
+    },
+    status: {
+      type: String,
+      enum: APPOINTMENT_STATUSES,
+      default: "scheduled",
     },
   },
   {

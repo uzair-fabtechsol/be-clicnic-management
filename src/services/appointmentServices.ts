@@ -46,6 +46,7 @@ const ensureDoctorAvailable = async (
     doctor: doctorId,
     date: { $gte: start, $lt: end },
     time,
+    status: { $ne: "canceled" },
   };
 
   if (excludeAppointmentId) {
@@ -107,7 +108,7 @@ const lookupPatientAndDoctorStages = [
 ];
 
 const getAppointmentsService = async (query: GetAppointmentsQuery) => {
-  const { page, limit, patient, doctor, date } = query;
+  const { page, limit, patient, doctor, date, status } = query;
   const skip = (page - 1) * limit;
 
   const match: Record<string, unknown> = {};
@@ -123,6 +124,10 @@ const getAppointmentsService = async (query: GetAppointmentsQuery) => {
   if (date) {
     const { start, end } = getDayBounds(date);
     match.date = { $gte: start, $lt: end };
+  }
+
+  if (status) {
+    match.status = status;
   }
 
   const [result] = await AppointmentModel.aggregate([
@@ -178,6 +183,10 @@ const updateAppointmentService = async (
     throw new AppError(404, "Appointment not found");
   }
 
+  if (appointment.status === "canceled") {
+    throw new AppError(400, "Cannot update a canceled appointment");
+  }
+
   const nextDate = body.date ?? appointment.date;
   const nextTime = body.time ?? appointment.time;
 
@@ -206,10 +215,28 @@ const deleteAppointmentService = async (
   }
 };
 
+const cancelAppointmentService = async (appointmentId: string) => {
+  const appointment = await AppointmentModel.findById(appointmentId);
+
+  if (!appointment) {
+    throw new AppError(404, "Appointment not found");
+  }
+
+  if (appointment.status === "canceled") {
+    throw new AppError(400, "Appointment is already canceled");
+  }
+
+  appointment.status = "canceled";
+  await appointment.save();
+
+  return { appointment };
+};
+
 export {
   createAppointmentService,
   getAppointmentsService,
   getAppointmentByIdService,
   updateAppointmentService,
   deleteAppointmentService,
+  cancelAppointmentService,
 };

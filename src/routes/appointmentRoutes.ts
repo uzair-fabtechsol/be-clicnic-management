@@ -5,6 +5,7 @@ import {
   getAppointment,
   updateAppointment,
   deleteAppointment,
+  cancelAppointment,
 } from "@src/controllers/appointmentController";
 import validationMiddleware from "@src/middlewares/validationMiddleware";
 import protectMiddleware from "@src/middlewares/protectMiddleware";
@@ -57,6 +58,14 @@ appointmentRouter.delete(
   hasPermissionMiddleware("appointments", "delete"),
   validateObjectIdMiddleware(),
   deleteAppointment
+);
+
+appointmentRouter.patch(
+  "/:id/cancel",
+  protectMiddleware,
+  hasPermissionMiddleware("appointments", "delete"),
+  validateObjectIdMiddleware(),
+  cancelAppointment
 );
 
 export default appointmentRouter;
