@@ -27,7 +27,7 @@ const createUser = catchAsync(
       message: "User created successfully",
       data,
     });
-  }
+  },
 );
 
 const getUsers = catchAsync(
@@ -41,7 +41,7 @@ const getUsers = catchAsync(
       message: "Users fetched successfully",
       data,
     });
-  }
+  },
 );
 
 const getUser = catchAsync(
@@ -55,7 +55,7 @@ const getUser = catchAsync(
       message: "User fetched successfully",
       data,
     });
-  }
+  },
 );
 
 const updateUser = catchAsync(
@@ -70,7 +70,7 @@ const updateUser = catchAsync(
       message: "User updated successfully",
       data,
     });
-  }
+  },
 );
 
 const deleteUser = catchAsync(
@@ -84,7 +84,7 @@ const deleteUser = catchAsync(
       message: "User deleted successfully",
       data: null,
     });
-  }
+  },
 );
 
 const setUserActiveStatus = catchAsync(
@@ -96,7 +96,7 @@ const setUserActiveStatus = catchAsync(
     const data = await setUserActiveStatusService(
       requestingAdminId,
       userId,
-      active
+      active,
     );
 
     sendResponse(res, 200, {
@@ -104,7 +104,7 @@ const setUserActiveStatus = catchAsync(
       message: `User ${active ? "activated" : "deactivated"} successfully`,
       data,
     });
-  }
+  },
 );
 
 export {
