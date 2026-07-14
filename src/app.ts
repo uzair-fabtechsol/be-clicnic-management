@@ -11,6 +11,7 @@ import userRouter from "@src/routes/userRoutes";
 import doctorRouter from "@src/routes/doctorRoutes";
 import patientRouter from "@src/routes/patientRoutes";
 import opdSlipRouter from "@src/routes/opdSlipRoutes";
+import appointmentRouter from "@src/routes/appointmentRoutes";
 import AppError from "@src/utils/appError";
 import globalErrorHandler from "@src/controllers/errorController";
 
@@ -97,6 +98,7 @@ app.use("/api/v1/users", userRouter);
 app.use("/api/v1/doctors", doctorRouter);
 app.use("/api/v1/patients", patientRouter);
 app.use("/api/v1/opd-slips", opdSlipRouter);
+app.use("/api/v1/appointments", appointmentRouter);
 
 // ─── Unhandled Routes ─────────────────────────────────────────────────────────
 
