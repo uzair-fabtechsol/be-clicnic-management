@@ -28,4 +28,13 @@ const getUsersQuerySchema = z.object({
   role: z.enum(["admin", "receptionist"]).optional(),
 });
 
-export { createUserSchema, updateUserSchema, getUsersQuerySchema };
+const setUserActiveStatusSchema = z.object({
+  active: z.boolean(),
+});
+
+export {
+  createUserSchema,
+  updateUserSchema,
+  getUsersQuerySchema,
+  setUserActiveStatusSchema,
+};

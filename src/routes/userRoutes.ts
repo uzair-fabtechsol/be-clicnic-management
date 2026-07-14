@@ -5,15 +5,18 @@ import {
   getUser,
   updateUser,
   deleteUser,
+  setUserActiveStatus,
 } from "@src/controllers/userController";
 import validationMiddleware from "@src/middlewares/validationMiddleware";
 import protectMiddleware from "@src/middlewares/protectMiddleware";
 import hasPermissionMiddleware from "@src/middlewares/hasPermissionMiddleware";
+import restrictToMiddleware from "@src/middlewares/restrictToMiddleware";
 import validateObjectIdMiddleware from "@src/middlewares/validateObjectIdMiddleware";
 import {
   createUserSchema,
   updateUserSchema,
   getUsersQuerySchema,
+  setUserActiveStatusSchema,
 } from "@src/validations/userValidations";
 
 const userRouter = Router();
@@ -57,6 +60,15 @@ userRouter.delete(
   hasPermissionMiddleware("users", "delete"),
   validateObjectIdMiddleware(),
   deleteUser
+);
+
+userRouter.patch(
+  "/:id/status",
+  protectMiddleware,
+  restrictToMiddleware("admin"),
+  validateObjectIdMiddleware(),
+  validationMiddleware(setUserActiveStatusSchema),
+  setUserActiveStatus
 );
 
 export default userRouter;

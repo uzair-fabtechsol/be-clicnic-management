@@ -98,10 +98,38 @@ const deleteUserService = async (userId: string): Promise<void> => {
   }
 };
 
+const setUserActiveStatusService = async (
+  requestingAdminId: string,
+  userId: string,
+  active: boolean
+) => {
+  if (requestingAdminId === userId) {
+    throw new AppError(403, "You cannot activate or deactivate your own account");
+  }
+
+  const user = await UserModel.findById(userId);
+
+  if (!user) {
+    throw new AppError(404, "User not found");
+  }
+
+  if (user.role === "admin") {
+    throw new AppError(403, "You cannot activate or deactivate another admin");
+  }
+
+  user.active = active;
+  await user.save();
+
+  const { password: _password, ...safeUser } = user.toObject();
+
+  return { user: safeUser };
+};
+
 export {
   createUserService,
   getUsersService,
   getUserByIdService,
   updateUserService,
   deleteUserService,
+  setUserActiveStatusService,
 };

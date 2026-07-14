@@ -7,11 +7,13 @@ import {
   getUserByIdService,
   updateUserService,
   deleteUserService,
+  setUserActiveStatusService,
 } from "@src/services/userServices";
 import type {
   CreateUserBody,
   UpdateUserBody,
   GetUsersQuery,
+  SetUserActiveStatusBody,
 } from "@src/types/userTypes";
 
 const createUser = catchAsync(
@@ -85,4 +87,31 @@ const deleteUser = catchAsync(
   }
 );
 
-export { createUser, getUsers, getUser, updateUser, deleteUser };
+const setUserActiveStatus = catchAsync(
+  async (req: Request, res: Response): Promise<void> => {
+    const requestingAdminId = req.user!._id;
+    const userId = req.params.id as string;
+    const { active } = req.body as SetUserActiveStatusBody;
+
+    const data = await setUserActiveStatusService(
+      requestingAdminId,
+      userId,
+      active
+    );
+
+    sendResponse(res, 200, {
+      status: "success",
+      message: `User ${active ? "activated" : "deactivated"} successfully`,
+      data,
+    });
+  }
+);
+
+export {
+  createUser,
+  getUsers,
+  getUser,
+  updateUser,
+  deleteUser,
+  setUserActiveStatus,
+};

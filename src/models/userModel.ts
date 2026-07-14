@@ -47,6 +47,10 @@ const userSchema = new Schema(
       type: [permissionSchema],
       default: [],
     },
+    active: {
+      type: Boolean,
+      default: true,
+    },
   },
   {
     timestamps: true,
