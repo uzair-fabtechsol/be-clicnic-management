@@ -66,6 +66,7 @@ const doctorSchema = new Schema(
   },
   {
     timestamps: true,
+    versionKey: false,
   }
 );
 
