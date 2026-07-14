@@ -9,6 +9,7 @@ import cookieParser from "cookie-parser";
 import authRouter from "@src/routes/authRoutes";
 import userRouter from "@src/routes/userRoutes";
 import doctorRouter from "@src/routes/doctorRoutes";
+import patientRouter from "@src/routes/patientRoutes";
 import AppError from "@src/utils/appError";
 import globalErrorHandler from "@src/controllers/errorController";
 
@@ -93,6 +94,7 @@ app.get("/", (req, res) => {
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/doctors", doctorRouter);
+app.use("/api/v1/patients", patientRouter);
 
 // ─── Unhandled Routes ─────────────────────────────────────────────────────────
 
