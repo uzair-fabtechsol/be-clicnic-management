@@ -6,7 +6,7 @@ import {
   getRevenueLastSevenDaysService,
   getRecentPatientsService,
   getRecentOpdSlipsService,
-  getDoctorAvailabilityTodayService,
+  getDoctorsAvailabilityTodayService,
 } from "@src/services/dashboardServices";
 
 const getDashboardStats = catchAsync(
@@ -57,13 +57,13 @@ const getRecentOpdSlips = catchAsync(
   }
 );
 
-const getDoctorAvailabilityToday = catchAsync(
+const getDoctorsAvailabilityToday = catchAsync(
   async (_req: Request, res: Response): Promise<void> => {
-    const data = await getDoctorAvailabilityTodayService();
+    const data = await getDoctorsAvailabilityTodayService();
 
     sendResponse(res, 200, {
       status: "success",
-      message: "Doctor availability for today fetched successfully",
+      message: "Doctors availability for today fetched successfully",
       data,
     });
   }
@@ -74,5 +74,5 @@ export {
   getRevenueLastSevenDays,
   getRecentPatients,
   getRecentOpdSlips,
-  getDoctorAvailabilityToday,
+  getDoctorsAvailabilityToday,
 };

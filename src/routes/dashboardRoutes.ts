@@ -4,7 +4,7 @@ import {
   getRevenueLastSevenDays,
   getRecentPatients,
   getRecentOpdSlips,
-  getDoctorAvailabilityToday,
+  getDoctorsAvailabilityToday,
 } from "@src/controllers/dashboardController";
 import protectMiddleware from "@src/middlewares/protectMiddleware";
 import hasPermissionMiddleware from "@src/middlewares/hasPermissionMiddleware";
@@ -40,10 +40,10 @@ dashboardRouter.get(
 );
 
 dashboardRouter.get(
-  "/doctor-availability-today",
+  "/doctors-availability-today",
   protectMiddleware,
   hasPermissionMiddleware("dashboard", "view"),
-  getDoctorAvailabilityToday
+  getDoctorsAvailabilityToday
 );
 
 export default dashboardRouter;
