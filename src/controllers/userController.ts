@@ -14,6 +14,7 @@ import type {
   UpdateUserBody,
   GetUsersQuery,
   SetUserActiveStatusBody,
+  UpdateProfileBody,
 } from "@src/types/userTypes";
 
 const createUser = catchAsync(
@@ -107,6 +108,21 @@ const setUserActiveStatus = catchAsync(
   },
 );
 
+const updateProfile = catchAsync(
+  async (req: Request, res: Response): Promise<void> => {
+    const userId = req.user!._id;
+    const body = req.body as UpdateProfileBody;
+
+    const data = await updateUserService(userId, body);
+
+    sendResponse(res, 200, {
+      status: "success",
+      message: "Profile updated successfully",
+      data,
+    });
+  },
+);
+
 export {
   createUser,
   getUsers,
@@ -114,4 +130,5 @@ export {
   updateUser,
   deleteUser,
   setUserActiveStatus,
+  updateProfile,
 };

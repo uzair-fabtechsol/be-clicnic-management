@@ -8,7 +8,7 @@ import {
   generateRefreshToken,
 } from "@src/utils/generateAuthTokens";
 import recordAuditLog from "@src/utils/auditLog";
-import type { SignInBody } from "@src/types/authTypes";
+import type { SignInBody, ChangePasswordBody } from "@src/types/authTypes";
 
 const signInService = async (body: SignInBody) => {
   const user = await UserModel.findOne({ email: body.email });
@@ -76,4 +76,27 @@ const meService = async (userId: string) => {
   return { user: safeUser };
 };
 
-export { signInService, rotateTokenService, meService };
+const changePasswordService = async (
+  userId: string,
+  body: ChangePasswordBody
+): Promise<void> => {
+  const user = await UserModel.findById(userId);
+
+  if (!user) {
+    throw new AppError(404, "User not found");
+  }
+
+  const isCurrentPasswordCorrect = await bcrypt.compare(
+    body.currentPassword,
+    user.password
+  );
+
+  if (!isCurrentPasswordCorrect) {
+    throw new AppError(401, "Current password is incorrect");
+  }
+
+  user.password = await bcrypt.hash(body.newPassword, 12);
+  await user.save();
+};
+
+export { signInService, rotateTokenService, meService, changePasswordService };

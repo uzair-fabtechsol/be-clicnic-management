@@ -8,7 +8,7 @@ const objectIdSchema = z
     message: "Invalid id",
   });
 
-const   createOpdSlipSchema = z.object({
+const createOpdSlipSchema = z.object({
   patient: objectIdSchema,
   doctor: objectIdSchema,
   paymentMethod: z.enum(PAYMENT_METHODS),

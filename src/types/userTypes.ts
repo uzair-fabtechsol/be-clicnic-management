@@ -4,16 +4,19 @@ import type {
   updateUserSchema,
   getUsersQuerySchema,
   setUserActiveStatusSchema,
+  updateProfileSchema,
 } from "@src/validations/userValidations";
 
 type CreateUserBody = z.infer<typeof createUserSchema>;
 type UpdateUserBody = z.infer<typeof updateUserSchema>;
 type GetUsersQuery = z.infer<typeof getUsersQuerySchema>;
 type SetUserActiveStatusBody = z.infer<typeof setUserActiveStatusSchema>;
+type UpdateProfileBody = z.infer<typeof updateProfileSchema>;
 
 export type {
   CreateUserBody,
   UpdateUserBody,
   GetUsersQuery,
   SetUserActiveStatusBody,
+  UpdateProfileBody,
 };

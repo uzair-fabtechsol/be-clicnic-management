@@ -26,6 +26,8 @@ opdSlipRouter.get(
   getOpdSlips
 );
 
+// api/v1/opd-slips
+
 opdSlipRouter.post(
   "/",
   protectMiddleware,

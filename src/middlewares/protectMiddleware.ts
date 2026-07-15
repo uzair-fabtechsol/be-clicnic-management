@@ -11,7 +11,10 @@ const protectMiddleware = catchAsync(
 
     if (!token) {
       next(
-        new AppError(401, "You are not signed in. Please sign in to get access")
+        new AppError(
+          401,
+          "You are not signed in. Please sign in to get access",
+        ),
       );
       return;
     }
@@ -28,7 +31,7 @@ const protectMiddleware = catchAsync(
 
     if (!currentUser) {
       next(
-        new AppError(401, "The user belonging to this token no longer exists")
+        new AppError(401, "The user belonging to this token no longer exists"),
       );
       return;
     }
@@ -40,7 +43,7 @@ const protectMiddleware = catchAsync(
     };
 
     next();
-  }
+  },
 );
 
 export default protectMiddleware;

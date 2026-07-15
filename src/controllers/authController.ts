@@ -6,8 +6,9 @@ import {
   signInService,
   rotateTokenService,
   meService,
+  changePasswordService,
 } from "@src/services/authServices";
-import type { SignInBody } from "@src/types/authTypes";
+import type { SignInBody, ChangePasswordBody } from "@src/types/authTypes";
 
 const signIn = catchAsync(
   async (req: Request, res: Response): Promise<void> => {
@@ -54,4 +55,19 @@ const me = catchAsync(async (req: Request, res: Response): Promise<void> => {
   });
 });
 
-export { signIn, rotateToken, me };
+const changePassword = catchAsync(
+  async (req: Request, res: Response): Promise<void> => {
+    const userId = req.user!._id;
+    const body = req.body as ChangePasswordBody;
+
+    await changePasswordService(userId, body);
+
+    sendResponse(res, 200, {
+      status: "success",
+      message: "Password changed successfully",
+      data: null,
+    });
+  }
+);
+
+export { signIn, rotateToken, me, changePassword };

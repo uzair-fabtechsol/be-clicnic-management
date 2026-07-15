@@ -1,13 +1,27 @@
 import { Router } from "express";
-import { signIn, rotateToken, me } from "@src/controllers/authController";
+import {
+  signIn,
+  rotateToken,
+  me,
+  changePassword,
+} from "@src/controllers/authController";
 import validationMiddleware from "@src/middlewares/validationMiddleware";
 import protectMiddleware from "@src/middlewares/protectMiddleware";
-import { signInSchema } from "@src/validations/authValidations";
+import {
+  signInSchema,
+  changePasswordSchema,
+} from "@src/validations/authValidations";
 
 const authRouter = Router();
 
 authRouter.post("/signin", validationMiddleware(signInSchema), signIn);
 authRouter.post("/rotate-token", rotateToken);
 authRouter.get("/me", protectMiddleware, me);
+authRouter.patch(
+  "/change-password",
+  protectMiddleware,
+  validationMiddleware(changePasswordSchema),
+  changePassword
+);
 
 export default authRouter;

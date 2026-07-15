@@ -6,6 +6,7 @@ import {
   updateUser,
   deleteUser,
   setUserActiveStatus,
+  updateProfile,
 } from "@src/controllers/userController";
 import validationMiddleware from "@src/middlewares/validationMiddleware";
 import protectMiddleware from "@src/middlewares/protectMiddleware";
@@ -17,9 +18,17 @@ import {
   updateUserSchema,
   getUsersQuerySchema,
   setUserActiveStatusSchema,
+  updateProfileSchema,
 } from "@src/validations/userValidations";
 
 const userRouter = Router();
+
+userRouter.patch(
+  "/profile",
+  protectMiddleware,
+  validationMiddleware(updateProfileSchema),
+  updateProfile
+);
 
 userRouter.get(
   "/",

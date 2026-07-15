@@ -32,9 +32,14 @@ const setUserActiveStatusSchema = z.object({
   active: z.boolean(),
 });
 
+const updateProfileSchema = z.object({
+  fullName: z.string().trim().min(1, "Full name is required"),
+});
+
 export {
   createUserSchema,
   updateUserSchema,
   getUsersQuerySchema,
   setUserActiveStatusSchema,
+  updateProfileSchema,
 };

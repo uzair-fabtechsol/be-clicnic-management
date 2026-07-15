@@ -13,6 +13,7 @@ import patientRouter from "@src/routes/patientRoutes";
 import opdSlipRouter from "@src/routes/opdSlipRoutes";
 import appointmentRouter from "@src/routes/appointmentRoutes";
 import auditLogRouter from "@src/routes/auditLogRoutes";
+import clinicInformationRouter from "@src/routes/clinicInformationRoutes";
 import AppError from "@src/utils/appError";
 import globalErrorHandler from "@src/controllers/errorController";
 
@@ -96,11 +97,12 @@ app.get("/", (req, res) => {
 
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/users", userRouter);
-app.use("/api/v1/doctors", doctorRouter);
+app.use("/api/v1/doctors", doctorRouter); 
 app.use("/api/v1/patients", patientRouter);
 app.use("/api/v1/opd-slips", opdSlipRouter);
 app.use("/api/v1/appointments", appointmentRouter);
 app.use("/api/v1/audit-logs", auditLogRouter);
+app.use("/api/v1/clinic-information", clinicInformationRouter);
 
 // ─── Unhandled Routes ─────────────────────────────────────────────────────────
 
