@@ -19,6 +19,7 @@ import appointmentRouter from "@src/routes/appointmentRoutes";
 import auditLogRouter from "@src/routes/auditLogRoutes";
 import clinicInformationRouter from "@src/routes/clinicInformationRoutes";
 import billingRouter from "@src/routes/billingRoutes";
+import reportRouter from "@src/routes/reportRoutes";
 import AppError from "@src/utils/appError";
 import globalErrorHandler from "@src/controllers/errorController";
 
@@ -109,6 +110,7 @@ app.use("/api/v1/appointments", appointmentRouter);
 app.use("/api/v1/audit-logs", auditLogRouter);
 app.use("/api/v1/clinic-information", clinicInformationRouter);
 app.use("/api/v1/billings", billingRouter);
+app.use("/api/v1/reports", reportRouter);
 
 // ─── Unhandled Routes ─────────────────────────────────────────────────────────
 

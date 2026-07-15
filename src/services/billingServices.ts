@@ -61,6 +61,7 @@ const projectBillingStage = {
     paymentStatus: 1,
     refundMethod: 1,
     refundReason: 1,
+    refundedAt: 1,
     createdAt: 1,
     updatedAt: 1,
   },
@@ -164,15 +165,22 @@ const refundBillingService = async (
   billing.paymentStatus = "refund";
   billing.refundMethod = body.refundMethod;
   billing.refundReason = body.refundReason;
+  billing.refundedAt = new Date();
   await billing.save();
 
   return getBillingByIdService(billingId);
 };
 
 //FUNCTION
-const getBillingStatsService = async () => {
-  const [result] = await BillingModel.aggregate([
-    ...joinBillingStages,
+const getBillingStatsService = async (from?: Date, to?: Date) => {
+  const pipeline: mongoose.PipelineStage[] = [];
+
+  if (from && to) {
+    pipeline.push({ $match: { createdAt: { $gte: from, $lte: to } } });
+  }
+
+  pipeline.push(
+    ...(joinBillingStages as mongoose.PipelineStage[]),
     {
       $group: {
         _id: null,
@@ -196,7 +204,9 @@ const getBillingStatsService = async () => {
         },
       },
     },
-  ]);
+  );
+
+  const [result] = await BillingModel.aggregate(pipeline);
 
   return {
     totalRevenue: result?.totalRevenue ?? 0,
@@ -210,4 +220,5 @@ export {
   getBillingByIdService,
   refundBillingService,
   getBillingStatsService,
+  joinBillingStages,
 };

@@ -31,6 +31,10 @@ const billingSchema = new Schema(
       trim: true,
       default: null,
     },
+    refundedAt: {
+      type: Date,
+      default: null,
+    },
   },
   {
     timestamps: true,
