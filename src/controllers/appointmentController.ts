@@ -8,6 +8,7 @@ import {
   updateAppointmentService,
   deleteAppointmentService,
   cancelAppointmentService,
+  completeAppointmentService,
 } from "@src/services/appointmentServices";
 import type {
   CreateAppointmentBody,
@@ -101,6 +102,20 @@ const cancelAppointment = catchAsync(
   }
 );
 
+const completeAppointment = catchAsync(
+  async (req: Request, res: Response): Promise<void> => {
+    const appointmentId = req.params.id as string;
+
+    const data = await completeAppointmentService(appointmentId);
+
+    sendResponse(res, 200, {
+      status: "success",
+      message: "Appointment completed successfully",
+      data,
+    });
+  }
+);
+
 export {
   createAppointment,
   getAppointments,
@@ -108,4 +123,5 @@ export {
   updateAppointment,
   deleteAppointment,
   cancelAppointment,
+  completeAppointment,
 };

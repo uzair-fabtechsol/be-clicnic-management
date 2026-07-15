@@ -1,4 +1,4 @@
-const APPOINTMENT_STATUSES = ["scheduled", "canceled"] as const;
+const APPOINTMENT_STATUSES = ["scheduled", "canceled", "completed"] as const;
 
 const APPOINTMENT_NUMBER_DIGITS = 8;
 

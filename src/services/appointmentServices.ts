@@ -200,6 +200,10 @@ const updateAppointmentService = async (
     throw new AppError(400, "Cannot update a canceled appointment");
   }
 
+  if (appointment.status === "completed") {
+    throw new AppError(400, "Cannot update a completed appointment");
+  }
+
   const nextDate = body.date ?? appointment.date;
   const nextTime = body.time ?? appointment.time;
 
@@ -244,6 +248,10 @@ const cancelAppointmentService = async (
     throw new AppError(400, "Appointment is already canceled");
   }
 
+  if (appointment.status === "completed") {
+    throw new AppError(400, "Cannot cancel a completed appointment");
+  }
+
   appointment.status = "canceled";
   await appointment.save();
 
@@ -262,6 +270,28 @@ const cancelAppointmentService = async (
   return { appointment };
 };
 
+//FUNCTION
+const completeAppointmentService = async (appointmentId: string) => {
+  const appointment = await AppointmentModel.findById(appointmentId);
+
+  if (!appointment) {
+    throw new AppError(404, "Appointment not found");
+  }
+
+  if (appointment.status === "completed") {
+    throw new AppError(400, "Appointment is already completed");
+  }
+
+  if (appointment.status === "canceled") {
+    throw new AppError(400, "Cannot complete a canceled appointment");
+  }
+
+  appointment.status = "completed";
+  await appointment.save();
+
+  return { appointment };
+};
+
 export {
   createAppointmentService,
   getAppointmentsService,
@@ -269,4 +299,5 @@ export {
   updateAppointmentService,
   deleteAppointmentService,
   cancelAppointmentService,
+  completeAppointmentService,
 };
