@@ -5,6 +5,7 @@ import DoctorModel from "@src/models/doctorModel";
 import AppError from "@src/utils/appError";
 import generateOpdSlipNumber from "@src/utils/opdSlipUtils";
 import recordAuditLog from "@src/utils/auditLog";
+import { createBillingService } from "@src/services/billingServices";
 import type {
   CreateOpdSlipBody,
   UpdateOpdSlipBody,
@@ -43,6 +44,8 @@ const createOpdSlipService = async (
     paymentMethod,
     symptomsAndRemarks,
   });
+
+  await createBillingService(opdSlip._id.toString());
 
   await recordAuditLog(
     "opdSlipGenerated",

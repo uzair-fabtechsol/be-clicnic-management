@@ -14,6 +14,7 @@ import opdSlipRouter from "@src/routes/opdSlipRoutes";
 import appointmentRouter from "@src/routes/appointmentRoutes";
 import auditLogRouter from "@src/routes/auditLogRoutes";
 import clinicInformationRouter from "@src/routes/clinicInformationRoutes";
+import billingRouter from "@src/routes/billingRoutes";
 import AppError from "@src/utils/appError";
 import globalErrorHandler from "@src/controllers/errorController";
 
@@ -103,6 +104,7 @@ app.use("/api/v1/opd-slips", opdSlipRouter);
 app.use("/api/v1/appointments", appointmentRouter);
 app.use("/api/v1/audit-logs", auditLogRouter);
 app.use("/api/v1/clinic-information", clinicInformationRouter);
+app.use("/api/v1/billing", billingRouter);
 
 // ─── Unhandled Routes ─────────────────────────────────────────────────────────
 
