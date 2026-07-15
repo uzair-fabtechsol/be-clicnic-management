@@ -3,7 +3,7 @@ import BillingModel from "@src/models/billingModel";
 import AppError from "@src/utils/appError";
 import generateTransactionId from "@src/utils/billingUtils";
 import { BILLING_TYPE } from "@src/constants/billingConstants";
-import type { GetBillingsQuery } from "@src/types/billingTypes";
+import type { GetBillingsQuery, RefundBillingBody } from "@src/types/billingTypes";
 import type { Pagination } from "@src/utils/sendResponse";
 
 const createBillingService = async (opdSlipId: string) => {
@@ -55,6 +55,8 @@ const shapeBillingStages = [
       paymentMethod: "$opdSlipDetails.paymentMethod",
       paymentAmount: "$doctorDetails.consultationFee",
       paymentStatus: 1,
+      refundMethod: 1,
+      refundReason: 1,
       createdAt: 1,
       updatedAt: 1,
     },
@@ -114,7 +116,10 @@ const getBillingByIdService = async (billingId: string) => {
   return { billing };
 };
 
-const refundBillingService = async (billingId: string) => {
+const refundBillingService = async (
+  billingId: string,
+  body: RefundBillingBody
+) => {
   const billing = await BillingModel.findById(billingId);
 
   if (!billing) {
@@ -126,6 +131,8 @@ const refundBillingService = async (billingId: string) => {
   }
 
   billing.paymentStatus = "refund";
+  billing.refundMethod = body.refundMethod;
+  billing.refundReason = body.refundReason;
   await billing.save();
 
   return getBillingByIdService(billingId);

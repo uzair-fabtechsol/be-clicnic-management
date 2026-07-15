@@ -6,7 +6,10 @@ import {
   getBillingByIdService,
   refundBillingService,
 } from "@src/services/billingServices";
-import type { GetBillingsQuery } from "@src/types/billingTypes";
+import type {
+  GetBillingsQuery,
+  RefundBillingBody,
+} from "@src/types/billingTypes";
 
 const getBillings = catchAsync(
   async (req: Request, res: Response): Promise<void> => {
@@ -39,8 +42,9 @@ const getBilling = catchAsync(
 const refundBilling = catchAsync(
   async (req: Request, res: Response): Promise<void> => {
     const billingId = req.params.id as string;
+    const body = req.body as RefundBillingBody;
 
-    const data = await refundBillingService(billingId);
+    const data = await refundBillingService(billingId, body);
 
     sendResponse(res, 200, {
       status: "success",

@@ -1,5 +1,6 @@
 import { model, models, Schema, type InferSchemaType } from "mongoose";
 import { PAYMENT_STATUSES } from "@src/constants/billingConstants";
+import { PAYMENT_METHODS } from "@src/constants/opdSlipConstants";
 
 const billingSchema = new Schema(
   {
@@ -19,6 +20,16 @@ const billingSchema = new Schema(
       required: true,
       enum: PAYMENT_STATUSES,
       default: "paid",
+    },
+    refundMethod: {
+      type: String,
+      enum: PAYMENT_METHODS,
+      default: null,
+    },
+    refundReason: {
+      type: String,
+      trim: true,
+      default: null,
     },
   },
   {

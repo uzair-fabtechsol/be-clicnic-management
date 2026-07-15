@@ -8,7 +8,10 @@ import validationMiddleware from "@src/middlewares/validationMiddleware";
 import protectMiddleware from "@src/middlewares/protectMiddleware";
 import hasPermissionMiddleware from "@src/middlewares/hasPermissionMiddleware";
 import validateObjectIdMiddleware from "@src/middlewares/validateObjectIdMiddleware";
-import { getBillingsQuerySchema } from "@src/validations/billingValidations";
+import {
+  getBillingsQuerySchema,
+  refundBillingSchema,
+} from "@src/validations/billingValidations";
 
 const billingRouter = Router();
 
@@ -33,6 +36,7 @@ billingRouter.patch(
   protectMiddleware,
   hasPermissionMiddleware("billing", "edit"),
   validateObjectIdMiddleware(),
+  validationMiddleware(refundBillingSchema),
   refundBilling
 );
 

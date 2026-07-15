@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { PAYMENT_STATUSES } from "@src/constants/billingConstants";
+import { PAYMENT_METHODS } from "@src/constants/opdSlipConstants";
 
 const getBillingsQuerySchema = z.object({
   page: z.coerce.number().int().min(1).default(1),
@@ -7,4 +8,9 @@ const getBillingsQuerySchema = z.object({
   paymentStatus: z.enum(PAYMENT_STATUSES).optional(),
 });
 
-export { getBillingsQuerySchema };
+const refundBillingSchema = z.object({
+  refundMethod: z.enum(PAYMENT_METHODS),
+  refundReason: z.string().trim().min(1, "Refund reason is required"),
+});
+
+export { getBillingsQuerySchema, refundBillingSchema };

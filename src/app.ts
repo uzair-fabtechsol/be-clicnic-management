@@ -1,4 +1,8 @@
-import express, { type NextFunction, type Request, type Response } from "express";
+import express, {
+  type NextFunction,
+  type Request,
+  type Response,
+} from "express";
 import morgan from "morgan";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
@@ -98,13 +102,13 @@ app.get("/", (req, res) => {
 
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/users", userRouter);
-app.use("/api/v1/doctors", doctorRouter); 
+app.use("/api/v1/doctors", doctorRouter);
 app.use("/api/v1/patients", patientRouter);
 app.use("/api/v1/opd-slips", opdSlipRouter);
 app.use("/api/v1/appointments", appointmentRouter);
 app.use("/api/v1/audit-logs", auditLogRouter);
 app.use("/api/v1/clinic-information", clinicInformationRouter);
-app.use("/api/v1/billing", billingRouter);
+app.use("/api/v1/billings", billingRouter);
 
 // ─── Unhandled Routes ─────────────────────────────────────────────────────────
 
@@ -112,9 +116,12 @@ app.all(
   "/{*splat}",
   (req: Request, _res: Response, next: NextFunction): void => {
     next(
-      new AppError(404, `Cannot find ${req.method} ${req.originalUrl} on this server`)
+      new AppError(
+        404,
+        `Cannot find ${req.method} ${req.originalUrl} on this server`,
+      ),
     );
-  }
+  },
 );
 
 // ─── Global Error Handler (must be last) ─────────────────────────────────────
