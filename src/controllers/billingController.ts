@@ -5,6 +5,7 @@ import {
   getBillingsService,
   getBillingByIdService,
   refundBillingService,
+  getBillingStatsService,
 } from "@src/services/billingServices";
 import type {
   GetBillingsQuery,
@@ -54,4 +55,16 @@ const refundBilling = catchAsync(
   }
 );
 
-export { getBillings, getBilling, refundBilling };
+const getBillingStats = catchAsync(
+  async (_req: Request, res: Response): Promise<void> => {
+    const data = await getBillingStatsService();
+
+    sendResponse(res, 200, {
+      status: "success",
+      message: "Billing stats fetched successfully",
+      data,
+    });
+  }
+);
+
+export { getBillings, getBilling, refundBilling, getBillingStats };

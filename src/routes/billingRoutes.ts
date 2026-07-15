@@ -3,6 +3,7 @@ import {
   getBillings,
   getBilling,
   refundBilling,
+  getBillingStats,
 } from "@src/controllers/billingController";
 import validationMiddleware from "@src/middlewares/validationMiddleware";
 import protectMiddleware from "@src/middlewares/protectMiddleware";
@@ -21,6 +22,13 @@ billingRouter.get(
   hasPermissionMiddleware("billing", "view"),
   validationMiddleware(getBillingsQuerySchema, "query"),
   getBillings
+);
+
+billingRouter.get(
+  "/stats",
+  protectMiddleware,
+  hasPermissionMiddleware("billing", "view"),
+  getBillingStats
 );
 
 billingRouter.get(

@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import BillingModel from "@src/models/billingModel";
 import AppError from "@src/utils/appError";
+import escapeRegex from "@src/utils/escapeRegex";
 import generateTransactionId from "@src/utils/billingUtils";
 import { BILLING_TYPE } from "@src/constants/billingConstants";
 import type { GetBillingsQuery, RefundBillingBody } from "@src/types/billingTypes";
@@ -18,7 +19,7 @@ const createBillingService = async (opdSlipId: string) => {
   return { billing };
 };
 
-const shapeBillingStages = [
+const joinBillingStages = [
   {
     $lookup: {
       from: "opdslips",
@@ -46,27 +47,30 @@ const shapeBillingStages = [
     },
   },
   { $unwind: "$doctorDetails" },
-  {
-    $project: {
-      _id: 1,
-      transactionId: 1,
-      patient: "$patientDetails.name",
-      opdSlipNumber: "$opdSlipDetails.opdSlipNumber",
-      type: { $literal: BILLING_TYPE },
-      paymentMethod: "$opdSlipDetails.paymentMethod",
-      paymentAmount: "$doctorDetails.consultationFee",
-      paymentStatus: 1,
-      refundMethod: 1,
-      refundReason: 1,
-      createdAt: 1,
-      updatedAt: 1,
-    },
-  },
 ];
+
+const projectBillingStage = {
+  $project: {
+    _id: 1,
+    transactionId: 1,
+    patient: "$patientDetails.name",
+    opdSlipNumber: "$opdSlipDetails.opdSlipNumber",
+    type: { $literal: BILLING_TYPE },
+    paymentMethod: "$opdSlipDetails.paymentMethod",
+    paymentAmount: "$doctorDetails.consultationFee",
+    paymentStatus: 1,
+    refundMethod: 1,
+    refundReason: 1,
+    createdAt: 1,
+    updatedAt: 1,
+  },
+};
+
+const shapeBillingStages = [...joinBillingStages, projectBillingStage];
 
 //FUNCTION
 const getBillingsService = async (query: GetBillingsQuery) => {
-  const { page, limit, paymentStatus } = query;
+  const { page, limit, paymentStatus, paymentMethod, search } = query;
   const skip = (page - 1) * limit;
 
   const match: Record<string, unknown> = {};
@@ -75,20 +79,43 @@ const getBillingsService = async (query: GetBillingsQuery) => {
     match.paymentStatus = paymentStatus;
   }
 
-  const [result] = await BillingModel.aggregate([
+  const pipeline: mongoose.PipelineStage[] = [
     { $match: match },
-    {
-      $facet: {
-        billings: [
-          { $sort: { createdAt: -1 } },
-          { $skip: skip },
-          { $limit: limit },
-          ...shapeBillingStages,
-        ],
-        totalCount: [{ $count: "count" }],
-      },
+    ...joinBillingStages,
+  ] as mongoose.PipelineStage[];
+
+  const postJoinMatch: Record<string, unknown> = {};
+
+  if (paymentMethod) {
+    postJoinMatch["opdSlipDetails.paymentMethod"] = paymentMethod;
+  }
+
+  if (search) {
+    const searchRegex = new RegExp(escapeRegex(search), "i");
+    postJoinMatch.$or = [
+      { transactionId: searchRegex },
+      { "opdSlipDetails.opdSlipNumber": searchRegex },
+      { "patientDetails.name": searchRegex },
+    ];
+  }
+
+  if (Object.keys(postJoinMatch).length > 0) {
+    pipeline.push({ $match: postJoinMatch });
+  }
+
+  pipeline.push({
+    $facet: {
+      billings: [
+        { $sort: { createdAt: -1 } },
+        { $skip: skip },
+        { $limit: limit },
+        projectBillingStage,
+      ],
+      totalCount: [{ $count: "count" }],
     },
-  ]);
+  });
+
+  const [result] = await BillingModel.aggregate(pipeline);
 
   const totalDocuments: number = result.totalCount[0]?.count ?? 0;
   const totalPages = Math.ceil(totalDocuments / limit) || 0;
@@ -142,9 +169,45 @@ const refundBillingService = async (
   return getBillingByIdService(billingId);
 };
 
+//FUNCTION
+const getBillingStatsService = async () => {
+  const [result] = await BillingModel.aggregate([
+    ...joinBillingStages,
+    {
+      $group: {
+        _id: null,
+        totalRevenue: {
+          $sum: {
+            $cond: [
+              { $eq: ["$paymentStatus", "paid"] },
+              "$doctorDetails.consultationFee",
+              0,
+            ],
+          },
+        },
+        totalRefunds: {
+          $sum: {
+            $cond: [
+              { $eq: ["$paymentStatus", "refund"] },
+              "$doctorDetails.consultationFee",
+              0,
+            ],
+          },
+        },
+      },
+    },
+  ]);
+
+  return {
+    totalRevenue: result?.totalRevenue ?? 0,
+    totalRefunds: result?.totalRefunds ?? 0,
+  };
+};
+
 export {
   createBillingService,
   getBillingsService,
   getBillingByIdService,
   refundBillingService,
+  getBillingStatsService,
 };
