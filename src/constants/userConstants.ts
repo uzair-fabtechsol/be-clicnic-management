@@ -8,6 +8,7 @@ const RESOURCES = [
   "settings",
   "reports",
   "auditLogs",
+  "dashboard",
 ] as const;
 
 const ACTIONS = ["view", "create", "edit", "delete"] as const;
