@@ -6,6 +6,7 @@ import { BILLING_TYPE } from "@src/constants/billingConstants";
 import type { GetBillingsQuery, RefundBillingBody } from "@src/types/billingTypes";
 import type { Pagination } from "@src/utils/sendResponse";
 
+//FUNCTION
 const createBillingService = async (opdSlipId: string) => {
   const transactionId = await generateTransactionId();
 
@@ -63,6 +64,7 @@ const shapeBillingStages = [
   },
 ];
 
+//FUNCTION
 const getBillingsService = async (query: GetBillingsQuery) => {
   const { page, limit, paymentStatus } = query;
   const skip = (page - 1) * limit;
@@ -103,6 +105,7 @@ const getBillingsService = async (query: GetBillingsQuery) => {
   return { billings: result.billings, pagination };
 };
 
+//FUNCTION
 const getBillingByIdService = async (billingId: string) => {
   const [billing] = await BillingModel.aggregate([
     { $match: { _id: new mongoose.Types.ObjectId(billingId) } },
@@ -116,6 +119,7 @@ const getBillingByIdService = async (billingId: string) => {
   return { billing };
 };
 
+//FUNCTION
 const refundBillingService = async (
   billingId: string,
   body: RefundBillingBody

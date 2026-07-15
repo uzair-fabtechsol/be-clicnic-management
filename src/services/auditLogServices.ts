@@ -17,6 +17,7 @@ const lookupPerformedByStages = [
   { $project: { performedBy: 0, "performedByDetails.password": 0 } },
 ];
 
+//FUNCTION
 const getAuditLogsService = async (query: GetAuditLogsQuery) => {
   const { page, limit, action, performedBy } = query;
   const skip = (page - 1) * limit;
@@ -61,6 +62,7 @@ const getAuditLogsService = async (query: GetAuditLogsQuery) => {
   return { auditLogs: result.auditLogs, pagination };
 };
 
+//FUNCTION
 const getAuditLogByIdService = async (auditLogId: string) => {
   const [auditLog] = await AuditLogModel.aggregate([
     { $match: { _id: new mongoose.Types.ObjectId(auditLogId) } },

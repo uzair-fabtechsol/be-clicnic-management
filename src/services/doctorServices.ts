@@ -9,6 +9,7 @@ import type {
 } from "@src/types/doctorTypes";
 import type { Pagination } from "@src/utils/sendResponse";
 
+//FUNCTION
 const createDoctorService = async (
   body: CreateDoctorBody,
   performedBy: string
@@ -25,6 +26,7 @@ const createDoctorService = async (
   return { doctor };
 };
 
+//FUNCTION
 const getDoctorsService = async (query: GetDoctorsQuery) => {
   const { page, limit, search, specialization, active } = query;
   const skip = (page - 1) * limit;
@@ -77,6 +79,7 @@ const getDoctorsService = async (query: GetDoctorsQuery) => {
   return { doctors: result.doctors, pagination };
 };
 
+//FUNCTION
 const getDoctorByIdService = async (doctorId: string) => {
   const doctor = await DoctorModel.findById(doctorId);
 
@@ -87,6 +90,7 @@ const getDoctorByIdService = async (doctorId: string) => {
   return { doctor };
 };
 
+//FUNCTION
 const updateDoctorService = async (
   doctorId: string,
   body: UpdateDoctorBody,
@@ -103,6 +107,7 @@ const updateDoctorService = async (
   return { doctor };
 };
 
+//FUNCTION
 const deleteDoctorService = async (doctorId: string): Promise<void> => {
   const doctor = await DoctorModel.findByIdAndDelete(doctorId);
 

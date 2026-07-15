@@ -13,6 +13,7 @@ import type {
 } from "@src/types/opdSlipTypes";
 import type { Pagination } from "@src/utils/sendResponse";
 
+//FUNCTION
 const createOpdSlipService = async (
   body: CreateOpdSlipBody,
   performedBy: string
@@ -79,6 +80,7 @@ const lookupPatientAndDoctorStages = [
   { $project: { patient: 0, doctor: 0 } },
 ];
 
+//FUNCTION
 const getOpdSlipsService = async (query: GetOpdSlipsQuery) => {
   const { page, limit, patient, doctor, visitType, paymentMethod } = query;
   const skip = (page - 1) * limit;
@@ -131,6 +133,7 @@ const getOpdSlipsService = async (query: GetOpdSlipsQuery) => {
   return { opdSlips: result.opdSlips, pagination };
 };
 
+//FUNCTION
 const getOpdSlipByIdService = async (opdSlipId: string) => {
   const [opdSlip] = await OpdSlipModel.aggregate([
     { $match: { _id: new mongoose.Types.ObjectId(opdSlipId) } },
@@ -144,6 +147,7 @@ const getOpdSlipByIdService = async (opdSlipId: string) => {
   return { opdSlip };
 };
 
+//FUNCTION
 const updateOpdSlipService = async (
   opdSlipId: string,
   body: UpdateOpdSlipBody
@@ -160,6 +164,7 @@ const updateOpdSlipService = async (
   return { opdSlip };
 };
 
+//FUNCTION
 const deleteOpdSlipService = async (opdSlipId: string): Promise<void> => {
   const opdSlip = await OpdSlipModel.findByIdAndDelete(opdSlipId);
 

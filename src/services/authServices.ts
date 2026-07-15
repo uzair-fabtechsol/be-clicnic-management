@@ -10,6 +10,7 @@ import {
 import recordAuditLog from "@src/utils/auditLog";
 import type { SignInBody, ChangePasswordBody } from "@src/types/authTypes";
 
+//FUNCTION
 const signInService = async (body: SignInBody) => {
   const user = await UserModel.findOne({ email: body.email });
 
@@ -32,6 +33,7 @@ const signInService = async (body: SignInBody) => {
   return { user: safeUser, accessToken, refreshToken };
 };
 
+//FUNCTION
 const rotateTokenService = async (refreshToken: string | undefined) => {
   if (!refreshToken) {
     throw new AppError(401, "Refresh token missing. Please sign in again");
@@ -64,6 +66,7 @@ const rotateTokenService = async (refreshToken: string | undefined) => {
   return { accessToken: newAccessToken, refreshToken: newRefreshToken };
 };
 
+//FUNCTION
 const meService = async (userId: string) => {
   const user = await UserModel.findById(userId);
 
@@ -76,6 +79,7 @@ const meService = async (userId: string) => {
   return { user: safeUser };
 };
 
+//FUNCTION
 const changePasswordService = async (
   userId: string,
   body: ChangePasswordBody

@@ -1,6 +1,7 @@
 import ClinicInformationModel from "@src/models/clinicInformationModel";
 import type { UpdateClinicInformationBody } from "@src/types/clinicInformationTypes";
 
+//FUNCTION
 const updateClinicInformationService = async (
   body: UpdateClinicInformationBody
 ) => {

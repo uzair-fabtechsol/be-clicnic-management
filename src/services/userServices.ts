@@ -9,6 +9,7 @@ import type {
 } from "@src/types/userTypes";
 import type { Pagination } from "@src/utils/sendResponse";
 
+//FUNCTION
 const createUserService = async (body: CreateUserBody) => {
   const hashedPassword = await bcrypt.hash(body.password, 12);
 
@@ -22,6 +23,7 @@ const createUserService = async (body: CreateUserBody) => {
   return { user: safeUser };
 };
 
+//FUNCTION
 const getUsersService = async (query: GetUsersQuery) => {
   const { page, limit, search, role } = query;
   const skip = (page - 1) * limit;
@@ -67,6 +69,7 @@ const getUsersService = async (query: GetUsersQuery) => {
   return { users: result.users, pagination };
 };
 
+//FUNCTION
 const getUserByIdService = async (userId: string) => {
   const user = await UserModel.findById(userId).select("-password");
 
@@ -77,6 +80,7 @@ const getUserByIdService = async (userId: string) => {
   return { user };
 };
 
+//FUNCTION
 const updateUserService = async (userId: string, body: UpdateUserBody) => {
   const user = await UserModel.findByIdAndUpdate(userId, body, {
     new: true,
@@ -90,6 +94,7 @@ const updateUserService = async (userId: string, body: UpdateUserBody) => {
   return { user };
 };
 
+//FUNCTION
 const deleteUserService = async (userId: string): Promise<void> => {
   const user = await UserModel.findByIdAndDelete(userId);
 
@@ -98,6 +103,7 @@ const deleteUserService = async (userId: string): Promise<void> => {
   }
 };
 
+//FUNCTION
 const setUserActiveStatusService = async (
   requestingAdminId: string,
   userId: string,

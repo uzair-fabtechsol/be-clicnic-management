@@ -15,6 +15,7 @@ import type {
 } from "@src/types/appointmentTypes";
 import type { Pagination } from "@src/utils/sendResponse";
 
+//FUNCTION
 const getDayBounds = (date: Date): { start: Date; end: Date } => {
   const start = new Date(
     Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate())
@@ -25,6 +26,7 @@ const getDayBounds = (date: Date): { start: Date; end: Date } => {
   return { start, end };
 };
 
+//FUNCTION
 const ensureDoctorAvailable = async (
   doctorId: string,
   date: Date,
@@ -67,6 +69,7 @@ const ensureDoctorAvailable = async (
   }
 };
 
+//FUNCTION
 const createAppointmentService = async (body: CreateAppointmentBody) => {
   const { patient, doctor, date, time, notes } = body;
 
@@ -114,6 +117,7 @@ const lookupPatientAndDoctorStages = [
   { $project: { patient: 0, doctor: 0 } },
 ];
 
+//FUNCTION
 const getAppointmentsService = async (query: GetAppointmentsQuery) => {
   const { page, limit, patient, doctor, date, status } = query;
   const skip = (page - 1) * limit;
@@ -167,6 +171,7 @@ const getAppointmentsService = async (query: GetAppointmentsQuery) => {
   return { appointments: result.appointments, pagination };
 };
 
+//FUNCTION
 const getAppointmentByIdService = async (appointmentId: string) => {
   const [appointment] = await AppointmentModel.aggregate([
     { $match: { _id: new mongoose.Types.ObjectId(appointmentId) } },
@@ -180,6 +185,7 @@ const getAppointmentByIdService = async (appointmentId: string) => {
   return { appointment };
 };
 
+//FUNCTION
 const updateAppointmentService = async (
   appointmentId: string,
   body: UpdateAppointmentBody
@@ -212,6 +218,7 @@ const updateAppointmentService = async (
   return { appointment };
 };
 
+//FUNCTION
 const deleteAppointmentService = async (
   appointmentId: string
 ): Promise<void> => {
@@ -222,6 +229,7 @@ const deleteAppointmentService = async (
   }
 };
 
+//FUNCTION
 const cancelAppointmentService = async (
   appointmentId: string,
   performedBy: string
