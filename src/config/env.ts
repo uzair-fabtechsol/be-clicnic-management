@@ -5,7 +5,11 @@ dotenv.config();
 
 const envSchema = z.object({
   NODE_ENV: z
-    .enum(["development", "production", "test"])
+    .preprocess(
+      (val) =>
+        typeof val === "string" ? val.trim().replace(/^"(.*)"$/, "$1") : val,
+      z.enum(["development", "production", "test"])
+    )
     .default("development"),
   PORT: z.coerce.number().default(5000),
   APP_NAME: z.string(),
