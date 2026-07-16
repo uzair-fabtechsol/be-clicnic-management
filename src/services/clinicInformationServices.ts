@@ -14,4 +14,11 @@ const updateClinicInformationService = async (
   return { clinicInformation };
 };
 
-export { updateClinicInformationService };
+//FUNCTION
+const getClinicInformationService = async () => {
+  const clinicInformation = await ClinicInformationModel.findOne({});
+
+  return { clinicInformation };
+};
+
+export { updateClinicInformationService, getClinicInformationService };

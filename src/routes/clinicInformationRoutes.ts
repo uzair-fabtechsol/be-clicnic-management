@@ -1,11 +1,16 @@
 import { Router } from "express";
-import { updateClinicInformation } from "@src/controllers/clinicInformationController";
+import {
+  updateClinicInformation,
+  getClinicInformation,
+} from "@src/controllers/clinicInformationController";
 import validationMiddleware from "@src/middlewares/validationMiddleware";
 import protectMiddleware from "@src/middlewares/protectMiddleware";
 import restrictToMiddleware from "@src/middlewares/restrictToMiddleware";
 import { updateClinicInformationSchema } from "@src/validations/clinicInformationValidations";
 
 const clinicInformationRouter = Router();
+
+clinicInformationRouter.get("/", protectMiddleware, getClinicInformation);
 
 clinicInformationRouter.patch(
   "/",

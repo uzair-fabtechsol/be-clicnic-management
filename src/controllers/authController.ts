@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import catchAsync from "@src/utils/catchAsync";
 import sendResponse from "@src/utils/sendResponse";
-import { setAuthCookies } from "@src/utils/cookies";
+import { setAuthCookies, clearAuthCookies } from "@src/utils/cookies";
 import {
   signInService,
   rotateTokenService,
@@ -70,4 +70,16 @@ const changePassword = catchAsync(
   }
 );
 
-export { signIn, rotateToken, me, changePassword };
+const logout = catchAsync(
+  async (req: Request, res: Response): Promise<void> => {
+    clearAuthCookies(res);
+
+    sendResponse(res, 200, {
+      status: "success",
+      message: "Logged out successfully",
+      data: null,
+    });
+  }
+);
+
+export { signIn, rotateToken, me, changePassword, logout };

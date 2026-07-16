@@ -1,7 +1,10 @@
 import { Request, Response } from "express";
 import catchAsync from "@src/utils/catchAsync";
 import sendResponse from "@src/utils/sendResponse";
-import { updateClinicInformationService } from "@src/services/clinicInformationServices";
+import {
+  updateClinicInformationService,
+  getClinicInformationService,
+} from "@src/services/clinicInformationServices";
 import type { UpdateClinicInformationBody } from "@src/types/clinicInformationTypes";
 
 const updateClinicInformation = catchAsync(
@@ -18,4 +21,16 @@ const updateClinicInformation = catchAsync(
   }
 );
 
-export { updateClinicInformation };
+const getClinicInformation = catchAsync(
+  async (req: Request, res: Response): Promise<void> => {
+    const data = await getClinicInformationService();
+
+    sendResponse(res, 200, {
+      status: "success",
+      message: "Clinic information fetched successfully",
+      data,
+    });
+  }
+);
+
+export { updateClinicInformation, getClinicInformation };

@@ -4,8 +4,9 @@ import express, {
   type Response,
 } from "express";
 import morgan from "morgan";
+import cors from "cors";
 import helmet from "helmet";
-import rateLimit from "express-rate-limit";
+// import rateLimit from "express-rate-limit";
 import mongoSanitize from "express-mongo-sanitize";
 import { clean as xssClean } from "xss-clean/lib/xss";
 import hpp from "hpp";
@@ -43,6 +44,14 @@ process.on("unhandledRejection", (err: Error) => {
 const app = express();
 
 app.use(morgan("dev"));
+
+// Allow requests from any origin while supporting credentials (cookies)
+const corsOptions: cors.CorsOptions = {
+  origin: (origin, callback) => callback(null, origin ?? true),
+  credentials: true,
+};
+app.use(cors(corsOptions));
+app.options("/{*splat}", cors(corsOptions));
 
 app.use(express.json({ limit: "10kb" }));
 
@@ -89,12 +98,12 @@ app.use(hpp());
 // Set security HTTP headers
 app.use(helmet());
 
-const limiter = rateLimit({
-  windowMs: 60 * 60 * 1000,
-  max: 100,
-  message: "Too many requests from this IP, please try again after an hour",
-});
-app.use("/api", limiter);
+// const limiter = rateLimit({
+//   windowMs: 60 * 60 * 1000,
+//   max: 10000,
+//   message: "Too many requests from this IP, please try again after an hour",
+// });
+// app.use("/api", limiter);
 
 // ─── Routes ───────────────────────────────────────────────────────────────────
 
