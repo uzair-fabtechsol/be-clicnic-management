@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { RESOURCES, ACTIONS } from "@src/constants/userConstants";
+import { RESOURCES, ACTIONS } from "../constants/userConstants";
 
 const permissionSchema = z.object({
   resource: z.enum(RESOURCES),

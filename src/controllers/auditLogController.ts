@@ -1,11 +1,11 @@
 import { Request, Response } from "express";
-import catchAsync from "@src/utils/catchAsync";
-import sendResponse from "@src/utils/sendResponse";
+import catchAsync from "../utils/catchAsync";
+import sendResponse from "../utils/sendResponse";
 import {
   getAuditLogsService,
   getAuditLogByIdService,
-} from "@src/services/auditLogServices";
-import type { GetAuditLogsQuery } from "@src/types/auditLogTypes";
+} from "../services/auditLogServices";
+import type { GetAuditLogsQuery } from "../types/auditLogTypes";
 
 const getAuditLogs = catchAsync(
   async (req: Request, res: Response): Promise<void> => {

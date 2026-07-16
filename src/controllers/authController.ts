@@ -1,14 +1,14 @@
 import { Request, Response } from "express";
-import catchAsync from "@src/utils/catchAsync";
-import sendResponse from "@src/utils/sendResponse";
-import { setAuthCookies, clearAuthCookies } from "@src/utils/cookies";
+import catchAsync from "../utils/catchAsync";
+import sendResponse from "../utils/sendResponse";
+import { setAuthCookies, clearAuthCookies } from "../utils/cookies";
 import {
   signInService,
   rotateTokenService,
   meService,
   changePasswordService,
-} from "@src/services/authServices";
-import type { SignInBody, ChangePasswordBody } from "@src/types/authTypes";
+} from "../services/authServices";
+import type { SignInBody, ChangePasswordBody } from "../types/authTypes";
 
 const signIn = catchAsync(
   async (req: Request, res: Response): Promise<void> => {

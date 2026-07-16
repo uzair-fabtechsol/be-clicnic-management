@@ -1,17 +1,17 @@
 import mongoose from "mongoose";
-import OpdSlipModel from "@src/models/opdSlipModel";
-import PatientModel from "@src/models/patientModel";
-import DoctorModel from "@src/models/doctorModel";
-import AppError from "@src/utils/appError";
-import generateOpdSlipNumber from "@src/utils/opdSlipUtils";
-import recordAuditLog from "@src/utils/auditLog";
-import { createBillingService } from "@src/services/billingServices";
+import OpdSlipModel from "../models/opdSlipModel";
+import PatientModel from "../models/patientModel";
+import DoctorModel from "../models/doctorModel";
+import AppError from "../utils/appError";
+import generateOpdSlipNumber from "../utils/opdSlipUtils";
+import recordAuditLog from "../utils/auditLog";
+import { createBillingService } from "./billingServices";
 import type {
   CreateOpdSlipBody,
   UpdateOpdSlipBody,
   GetOpdSlipsQuery,
-} from "@src/types/opdSlipTypes";
-import type { Pagination } from "@src/utils/sendResponse";
+} from "../types/opdSlipTypes";
+import type { Pagination } from "../utils/sendResponse";
 
 //FUNCTION
 const createOpdSlipService = async (

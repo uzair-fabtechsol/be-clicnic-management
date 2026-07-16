@@ -3,7 +3,7 @@ import type {
   createDoctorSchema,
   updateDoctorSchema,
   getDoctorsQuerySchema,
-} from "@src/validations/doctorValidations";
+} from "../validations/doctorValidations";
 
 type CreateDoctorBody = z.infer<typeof createDoctorSchema>;
 type UpdateDoctorBody = z.infer<typeof updateDoctorSchema>;

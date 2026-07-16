@@ -1,11 +1,11 @@
 import mongoose from "mongoose";
-import BillingModel from "@src/models/billingModel";
-import AppError from "@src/utils/appError";
-import escapeRegex from "@src/utils/escapeRegex";
-import generateTransactionId from "@src/utils/billingUtils";
-import { BILLING_TYPE } from "@src/constants/billingConstants";
-import type { GetBillingsQuery, RefundBillingBody } from "@src/types/billingTypes";
-import type { Pagination } from "@src/utils/sendResponse";
+import BillingModel from "../models/billingModel";
+import AppError from "../utils/appError";
+import escapeRegex from "../utils/escapeRegex";
+import generateTransactionId from "../utils/billingUtils";
+import { BILLING_TYPE } from "../constants/billingConstants";
+import type { GetBillingsQuery, RefundBillingBody } from "../types/billingTypes";
+import type { Pagination } from "../utils/sendResponse";
 
 //FUNCTION
 const createBillingService = async (opdSlipId: string) => {

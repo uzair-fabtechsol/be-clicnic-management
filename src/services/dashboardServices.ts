@@ -1,13 +1,13 @@
 import mongoose from "mongoose";
-import OpdSlipModel from "@src/models/opdSlipModel";
-import AppointmentModel from "@src/models/appointmentModel";
-import BillingModel from "@src/models/billingModel";
-import PatientModel from "@src/models/patientModel";
-import DoctorModel, { type DoctorType } from "@src/models/doctorModel";
-import { getBillingStatsService, joinBillingStages } from "@src/services/billingServices";
-import getTodayRange from "@src/utils/dashboardUtils";
-import { getDayName } from "@src/utils/appointmentUtils";
-import { dateToTimeString } from "@src/utils/time";
+import OpdSlipModel from "../models/opdSlipModel";
+import AppointmentModel from "../models/appointmentModel";
+import BillingModel from "../models/billingModel";
+import PatientModel from "../models/patientModel";
+import DoctorModel, { type DoctorType } from "../models/doctorModel";
+import { getBillingStatsService, joinBillingStages } from "./billingServices";
+import getTodayRange from "../utils/dashboardUtils";
+import { getDayName } from "../utils/appointmentUtils";
+import { dateToTimeString } from "../utils/time";
 
 const RECENT_PATIENTS_LIMIT = 5;
 const RECENT_OPD_SLIPS_LIMIT = 5;

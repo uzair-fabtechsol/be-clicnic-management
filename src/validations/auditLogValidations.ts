@@ -1,6 +1,6 @@
 import { z } from "zod";
 import mongoose from "mongoose";
-import { AUDIT_LOG_ACTIONS } from "@src/constants/auditLogConstants";
+import { AUDIT_LOG_ACTIONS } from "../constants/auditLogConstants";
 
 const getAuditLogsQuerySchema = z.object({
   page: z.coerce.number().int().min(1).default(1),

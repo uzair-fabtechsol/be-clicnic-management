@@ -1,14 +1,14 @@
-import PatientModel from "@src/models/patientModel";
-import AppError from "@src/utils/appError";
-import escapeRegex from "@src/utils/escapeRegex";
-import generateMrNumber from "@src/utils/patientUtils";
-import recordAuditLog from "@src/utils/auditLog";
+import PatientModel from "../models/patientModel";
+import AppError from "../utils/appError";
+import escapeRegex from "../utils/escapeRegex";
+import generateMrNumber from "../utils/patientUtils";
+import recordAuditLog from "../utils/auditLog";
 import type {
   CreatePatientBody,
   UpdatePatientBody,
   GetPatientsQuery,
-} from "@src/types/patientTypes";
-import type { Pagination } from "@src/utils/sendResponse";
+} from "../types/patientTypes";
+import type { Pagination } from "../utils/sendResponse";
 
 //FUNCTION
 const createPatientService = async (

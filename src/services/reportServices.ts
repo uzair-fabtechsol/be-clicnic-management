@@ -1,11 +1,11 @@
 import mongoose from "mongoose";
-import PatientModel from "@src/models/patientModel";
-import OpdSlipModel from "@src/models/opdSlipModel";
-import BillingModel from "@src/models/billingModel";
-import { getBillingStatsService, joinBillingStages } from "@src/services/billingServices";
-import { PAYMENT_METHODS } from "@src/constants/opdSlipConstants";
-import resolveDateRange from "@src/utils/reportUtils";
-import type { Pagination } from "@src/utils/sendResponse";
+import PatientModel from "../models/patientModel";
+import OpdSlipModel from "../models/opdSlipModel";
+import BillingModel from "../models/billingModel";
+import { getBillingStatsService, joinBillingStages } from "./billingServices";
+import { PAYMENT_METHODS } from "../constants/opdSlipConstants";
+import resolveDateRange from "../utils/reportUtils";
+import type { Pagination } from "../utils/sendResponse";
 
 //FUNCTION
 const getPatientsReportService = async (

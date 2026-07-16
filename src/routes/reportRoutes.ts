@@ -7,14 +7,14 @@ import {
   getPatientsReportStats,
   getFinancialReportStats,
   getOpdReportStats,
-} from "@src/controllers/reportController";
-import validationMiddleware from "@src/middlewares/validationMiddleware";
-import protectMiddleware from "@src/middlewares/protectMiddleware";
-import hasPermissionMiddleware from "@src/middlewares/hasPermissionMiddleware";
+} from "../controllers/reportController";
+import validationMiddleware from "../middlewares/validationMiddleware";
+import protectMiddleware from "../middlewares/protectMiddleware";
+import hasPermissionMiddleware from "../middlewares/hasPermissionMiddleware";
 import {
   getReportsQuerySchema,
   getReportStatsQuerySchema,
-} from "@src/validations/reportValidations";
+} from "../validations/reportValidations";
 
 const reportRouter = Router();
 

@@ -1,5 +1,5 @@
-import ClinicInformationModel from "@src/models/clinicInformationModel";
-import type { UpdateClinicInformationBody } from "@src/types/clinicInformationTypes";
+import ClinicInformationModel from "../models/clinicInformationModel";
+import type { UpdateClinicInformationBody } from "../types/clinicInformationTypes";
 
 //FUNCTION
 const updateClinicInformationService = async (

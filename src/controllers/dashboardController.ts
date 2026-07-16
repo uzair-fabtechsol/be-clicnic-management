@@ -1,13 +1,13 @@
 import { Request, Response } from "express";
-import catchAsync from "@src/utils/catchAsync";
-import sendResponse from "@src/utils/sendResponse";
+import catchAsync from "../utils/catchAsync";
+import sendResponse from "../utils/sendResponse";
 import {
   getDashboardStatsService,
   getRevenueLastSevenDaysService,
   getRecentPatientsService,
   getRecentOpdSlipsService,
   getDoctorsAvailabilityTodayService,
-} from "@src/services/dashboardServices";
+} from "../services/dashboardServices";
 
 const getDashboardStats = catchAsync(
   async (_req: Request, res: Response): Promise<void> => {

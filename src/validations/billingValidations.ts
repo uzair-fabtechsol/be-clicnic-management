@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { PAYMENT_STATUSES } from "@src/constants/billingConstants";
-import { PAYMENT_METHODS } from "@src/constants/opdSlipConstants";
+import { PAYMENT_STATUSES } from "../constants/billingConstants";
+import { PAYMENT_METHODS } from "../constants/opdSlipConstants";
 
 const getBillingsQuerySchema = z.object({
   page: z.coerce.number().int().min(1).default(1),

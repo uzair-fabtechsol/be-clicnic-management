@@ -7,16 +7,16 @@ import {
   deleteAppointment,
   cancelAppointment,
   completeAppointment,
-} from "@src/controllers/appointmentController";
-import validationMiddleware from "@src/middlewares/validationMiddleware";
-import protectMiddleware from "@src/middlewares/protectMiddleware";
-import hasPermissionMiddleware from "@src/middlewares/hasPermissionMiddleware";
-import validateObjectIdMiddleware from "@src/middlewares/validateObjectIdMiddleware";
+} from "../controllers/appointmentController";
+import validationMiddleware from "../middlewares/validationMiddleware";
+import protectMiddleware from "../middlewares/protectMiddleware";
+import hasPermissionMiddleware from "../middlewares/hasPermissionMiddleware";
+import validateObjectIdMiddleware from "../middlewares/validateObjectIdMiddleware";
 import {
   createAppointmentSchema,
   updateAppointmentSchema,
   getAppointmentsQuerySchema,
-} from "@src/validations/appointmentValidations";
+} from "../validations/appointmentValidations";
 
 const appointmentRouter = Router();
 

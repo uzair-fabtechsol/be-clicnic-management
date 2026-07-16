@@ -1,5 +1,5 @@
 import { model, models, Schema, type InferSchemaType } from "mongoose";
-import { RESOURCES, ACTIONS } from "@src/constants/userConstants";
+import { RESOURCES, ACTIONS } from "../constants/userConstants";
 
 const permissionSchema = new Schema(
   {

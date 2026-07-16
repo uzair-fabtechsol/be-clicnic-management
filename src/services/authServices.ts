@@ -1,14 +1,14 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import UserModel from "@src/models/userModel";
-import AppError from "@src/utils/appError";
-import { env } from "@src/config/env";
+import UserModel from "../models/userModel";
+import AppError from "../utils/appError";
+import { env } from "../config/env";
 import {
   generateAccessToken,
   generateRefreshToken,
-} from "@src/utils/generateAuthTokens";
-import recordAuditLog from "@src/utils/auditLog";
-import type { SignInBody, ChangePasswordBody } from "@src/types/authTypes";
+} from "../utils/generateAuthTokens";
+import recordAuditLog from "../utils/auditLog";
+import type { SignInBody, ChangePasswordBody } from "../types/authTypes";
 
 //FUNCTION
 const signInService = async (body: SignInBody) => {

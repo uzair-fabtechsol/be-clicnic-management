@@ -11,19 +11,19 @@ import mongoSanitize from "express-mongo-sanitize";
 import { clean as xssClean } from "xss-clean/lib/xss";
 import hpp from "hpp";
 import cookieParser from "cookie-parser";
-import authRouter from "@src/routes/authRoutes";
-import userRouter from "@src/routes/userRoutes";
-import doctorRouter from "@src/routes/doctorRoutes";
-import patientRouter from "@src/routes/patientRoutes";
-import opdSlipRouter from "@src/routes/opdSlipRoutes";
-import appointmentRouter from "@src/routes/appointmentRoutes";
-import auditLogRouter from "@src/routes/auditLogRoutes";
-import clinicInformationRouter from "@src/routes/clinicInformationRoutes";
-import billingRouter from "@src/routes/billingRoutes";
-import reportRouter from "@src/routes/reportRoutes";
-import dashboardRouter from "@src/routes/dashboardRoutes";
-import AppError from "@src/utils/appError";
-import globalErrorHandler from "@src/controllers/errorController";
+import authRouter from "./routes/authRoutes";
+import userRouter from "./routes/userRoutes";
+import doctorRouter from "./routes/doctorRoutes";
+import patientRouter from "./routes/patientRoutes";
+import opdSlipRouter from "./routes/opdSlipRoutes";
+import appointmentRouter from "./routes/appointmentRoutes";
+import auditLogRouter from "./routes/auditLogRoutes";
+import clinicInformationRouter from "./routes/clinicInformationRoutes";
+import billingRouter from "./routes/billingRoutes";
+import reportRouter from "./routes/reportRoutes";
+import dashboardRouter from "./routes/dashboardRoutes";
+import AppError from "./utils/appError";
+import globalErrorHandler from "./controllers/errorController";
 
 // ─── Process-level Safety Nets ────────────────────────────────────────────────
 

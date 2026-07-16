@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { DAYS } from "@src/constants/doctorConstants";
-import { timeStringToDate } from "@src/utils/time";
+import { DAYS } from "../constants/doctorConstants";
+import { timeStringToDate } from "../utils/time";
 
 // Matches the value emitted by <input type="time">, e.g. "08:00", "13:30".
 const TIME_REGEX = /^([01]\d|2[0-3]):[0-5]\d$/;

@@ -1,8 +1,8 @@
-import type { DAYS } from "@src/constants/doctorConstants";
-import type { DoctorType } from "@src/models/doctorModel";
-import AppointmentModel from "@src/models/appointmentModel";
-import generateUniqueNumber from "@src/utils/generateUniqueNumber";
-import { APPOINTMENT_NUMBER_DIGITS } from "@src/constants/appointmentConstants";
+import type { DAYS } from "../constants/doctorConstants";
+import type { DoctorType } from "../models/doctorModel";
+import AppointmentModel from "../models/appointmentModel";
+import generateUniqueNumber from "./generateUniqueNumber";
+import { APPOINTMENT_NUMBER_DIGITS } from "../constants/appointmentConstants";
 
 const WEEKDAYS_BY_INDEX = [
   "Sunday",

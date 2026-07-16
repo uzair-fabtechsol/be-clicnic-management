@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import catchAsync from "@src/utils/catchAsync";
-import sendResponse from "@src/utils/sendResponse";
+import catchAsync from "../utils/catchAsync";
+import sendResponse from "../utils/sendResponse";
 import {
   getPatientsReportService,
   getDoctorsReportService,
@@ -9,8 +9,8 @@ import {
   getPatientsReportStatsService,
   getFinancialReportStatsService,
   getOpdReportStatsService,
-} from "@src/services/reportServices";
-import type { GetReportsQuery, GetReportStatsQuery } from "@src/types/reportTypes";
+} from "../services/reportServices";
+import type { GetReportsQuery, GetReportStatsQuery } from "../types/reportTypes";
 
 const getPatientsReport = catchAsync(
   async (req: Request, res: Response): Promise<void> => {

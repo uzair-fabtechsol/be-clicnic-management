@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
-import catchAsync from "@src/utils/catchAsync";
-import AppError from "@src/utils/appError";
-import UserModel from "@src/models/userModel";
-import { env } from "@src/config/env";
+import catchAsync from "../utils/catchAsync";
+import AppError from "../utils/appError";
+import UserModel from "../models/userModel";
+import { env } from "../config/env";
 
 const protectMiddleware = catchAsync(
   async (req: Request, _res: Response, next): Promise<void> => {

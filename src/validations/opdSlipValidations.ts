@@ -1,6 +1,6 @@
 import { z } from "zod";
 import mongoose from "mongoose";
-import { PAYMENT_METHODS, VISIT_TYPES } from "@src/constants/opdSlipConstants";
+import { PAYMENT_METHODS, VISIT_TYPES } from "../constants/opdSlipConstants";
 
 const objectIdSchema = z
   .string()

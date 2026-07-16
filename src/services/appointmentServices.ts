@@ -1,19 +1,19 @@
 import mongoose from "mongoose";
-import AppointmentModel from "@src/models/appointmentModel";
-import PatientModel from "@src/models/patientModel";
-import DoctorModel from "@src/models/doctorModel";
-import AppError from "@src/utils/appError";
+import AppointmentModel from "../models/appointmentModel";
+import PatientModel from "../models/patientModel";
+import DoctorModel from "../models/doctorModel";
+import AppError from "../utils/appError";
 import {
   isDoctorAvailableAtSlot,
   generateAppointmentNumber,
-} from "@src/utils/appointmentUtils";
-import recordAuditLog from "@src/utils/auditLog";
+} from "../utils/appointmentUtils";
+import recordAuditLog from "../utils/auditLog";
 import type {
   CreateAppointmentBody,
   UpdateAppointmentBody,
   GetAppointmentsQuery,
-} from "@src/types/appointmentTypes";
-import type { Pagination } from "@src/utils/sendResponse";
+} from "../types/appointmentTypes";
+import type { Pagination } from "../utils/sendResponse";
 
 //FUNCTION
 const getDayBounds = (date: Date): { start: Date; end: Date } => {

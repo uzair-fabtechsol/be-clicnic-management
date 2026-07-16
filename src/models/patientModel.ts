@@ -1,5 +1,5 @@
 import { model, models, Schema, type InferSchemaType } from "mongoose";
-import { GENDERS, BLOOD_GROUPS } from "@src/constants/patientConstants";
+import { GENDERS, BLOOD_GROUPS } from "../constants/patientConstants";
 
 const patientSchema = new Schema(
   {

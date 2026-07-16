@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
-import AuditLogModel from "@src/models/auditLogModel";
-import AppError from "@src/utils/appError";
-import type { GetAuditLogsQuery } from "@src/types/auditLogTypes";
-import type { Pagination } from "@src/utils/sendResponse";
+import AuditLogModel from "../models/auditLogModel";
+import AppError from "../utils/appError";
+import type { GetAuditLogsQuery } from "../types/auditLogTypes";
+import type { Pagination } from "../utils/sendResponse";
 
 const lookupPerformedByStages = [
   {

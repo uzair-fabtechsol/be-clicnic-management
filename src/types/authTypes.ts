@@ -2,7 +2,7 @@ import type { z } from "zod";
 import type {
   signInSchema,
   changePasswordSchema,
-} from "@src/validations/authValidations";
+} from "../validations/authValidations";
 
 type SignInBody = z.infer<typeof signInSchema>;
 type ChangePasswordBody = z.infer<typeof changePasswordSchema>;

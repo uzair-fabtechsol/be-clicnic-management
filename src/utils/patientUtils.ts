@@ -1,6 +1,6 @@
 import crypto from "crypto";
-import PatientModel from "@src/models/patientModel";
-import { MR_NUMBER_DIGITS } from "@src/constants/patientConstants";
+import PatientModel from "../models/patientModel";
+import { MR_NUMBER_DIGITS } from "../constants/patientConstants";
 
 const generateMrNumber = async (): Promise<string> => {
   let mrNumber: string;

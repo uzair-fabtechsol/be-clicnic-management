@@ -1,5 +1,5 @@
 import { model, models, Schema, type InferSchemaType } from "mongoose";
-import { APPOINTMENT_STATUSES } from "@src/constants/appointmentConstants";
+import { APPOINTMENT_STATUSES } from "../constants/appointmentConstants";
 
 const appointmentSchema = new Schema(
   {

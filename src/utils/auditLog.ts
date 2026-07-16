@@ -1,5 +1,5 @@
-import AuditLogModel from "@src/models/auditLogModel";
-import type { AUDIT_LOG_ACTIONS } from "@src/constants/auditLogConstants";
+import AuditLogModel from "../models/auditLogModel";
+import type { AUDIT_LOG_ACTIONS } from "../constants/auditLogConstants";
 
 type AuditLogAction = (typeof AUDIT_LOG_ACTIONS)[number];
 

@@ -1,5 +1,5 @@
 import { model, models, Schema, type InferSchemaType } from "mongoose";
-import { DAYS } from "@src/constants/doctorConstants";
+import { DAYS } from "../constants/doctorConstants";
 
 const slotSchema = new Schema(
   {

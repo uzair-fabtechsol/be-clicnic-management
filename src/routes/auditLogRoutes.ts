@@ -1,10 +1,10 @@
 import { Router } from "express";
-import { getAuditLogs, getAuditLog } from "@src/controllers/auditLogController";
-import validationMiddleware from "@src/middlewares/validationMiddleware";
-import protectMiddleware from "@src/middlewares/protectMiddleware";
-import hasPermissionMiddleware from "@src/middlewares/hasPermissionMiddleware";
-import validateObjectIdMiddleware from "@src/middlewares/validateObjectIdMiddleware";
-import { getAuditLogsQuerySchema } from "@src/validations/auditLogValidations";
+import { getAuditLogs, getAuditLog } from "../controllers/auditLogController";
+import validationMiddleware from "../middlewares/validationMiddleware";
+import protectMiddleware from "../middlewares/protectMiddleware";
+import hasPermissionMiddleware from "../middlewares/hasPermissionMiddleware";
+import validateObjectIdMiddleware from "../middlewares/validateObjectIdMiddleware";
+import { getAuditLogsQuerySchema } from "../validations/auditLogValidations";
 
 const auditLogRouter = Router();
 

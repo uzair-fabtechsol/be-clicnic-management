@@ -1,6 +1,6 @@
 import { NextFunction, Request, RequestHandler, Response } from "express";
 import { z } from "zod";
-import AppError from "@src/utils/appError";
+import AppError from "../utils/appError";
 
 // Express 5 makes `req.query` a read-only getter, so a validated query
 // object cannot be reassigned onto `req.query`. It is stored on

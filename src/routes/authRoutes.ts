@@ -5,13 +5,13 @@ import {
   me,
   changePassword,
   logout,
-} from "@src/controllers/authController";
-import validationMiddleware from "@src/middlewares/validationMiddleware";
-import protectMiddleware from "@src/middlewares/protectMiddleware";
+} from "../controllers/authController";
+import validationMiddleware from "../middlewares/validationMiddleware";
+import protectMiddleware from "../middlewares/protectMiddleware";
 import {
   signInSchema,
   changePasswordSchema,
-} from "@src/validations/authValidations";
+} from "../validations/authValidations";
 
 const authRouter = Router();
 

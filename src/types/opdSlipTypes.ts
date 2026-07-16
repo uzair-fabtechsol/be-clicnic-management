@@ -3,7 +3,7 @@ import type {
   createOpdSlipSchema,
   updateOpdSlipSchema,
   getOpdSlipsQuerySchema,
-} from "@src/validations/opdSlipValidations";
+} from "../validations/opdSlipValidations";
 
 type CreateOpdSlipBody = z.infer<typeof createOpdSlipSchema>;
 type UpdateOpdSlipBody = z.infer<typeof updateOpdSlipSchema>;

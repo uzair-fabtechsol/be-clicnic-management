@@ -1,18 +1,18 @@
 import { Request, Response } from "express";
-import catchAsync from "@src/utils/catchAsync";
-import sendResponse from "@src/utils/sendResponse";
+import catchAsync from "../utils/catchAsync";
+import sendResponse from "../utils/sendResponse";
 import {
   createDoctorService,
   getDoctorsService,
   getDoctorByIdService,
   updateDoctorService,
   deleteDoctorService,
-} from "@src/services/doctorServices";
+} from "../services/doctorServices";
 import type {
   CreateDoctorBody,
   UpdateDoctorBody,
   GetDoctorsQuery,
-} from "@src/types/doctorTypes";
+} from "../types/doctorTypes";
 
 const createDoctor = catchAsync(
   async (req: Request, res: Response): Promise<void> => {

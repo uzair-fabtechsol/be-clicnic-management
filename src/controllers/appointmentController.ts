@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import catchAsync from "@src/utils/catchAsync";
-import sendResponse from "@src/utils/sendResponse";
+import catchAsync from "../utils/catchAsync";
+import sendResponse from "../utils/sendResponse";
 import {
   createAppointmentService,
   getAppointmentsService,
@@ -9,12 +9,12 @@ import {
   deleteAppointmentService,
   cancelAppointmentService,
   completeAppointmentService,
-} from "@src/services/appointmentServices";
+} from "../services/appointmentServices";
 import type {
   CreateAppointmentBody,
   UpdateAppointmentBody,
   GetAppointmentsQuery,
-} from "@src/types/appointmentTypes";
+} from "../types/appointmentTypes";
 
 const createAppointment = catchAsync(
   async (req: Request, res: Response): Promise<void> => {

@@ -1,5 +1,5 @@
 import { model, models, Schema, type InferSchemaType } from "mongoose";
-import { AUDIT_LOG_ACTIONS } from "@src/constants/auditLogConstants";
+import { AUDIT_LOG_ACTIONS } from "../constants/auditLogConstants";
 
 const auditLogSchema = new Schema(
   {

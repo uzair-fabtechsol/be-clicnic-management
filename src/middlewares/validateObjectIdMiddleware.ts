@@ -1,6 +1,6 @@
 import { NextFunction, Request, RequestHandler, Response } from "express";
 import mongoose from "mongoose";
-import AppError from "@src/utils/appError";
+import AppError from "../utils/appError";
 
 const validateObjectIdMiddleware = (paramName = "id"): RequestHandler => {
   return (req: Request, _res: Response, next: NextFunction): void => {

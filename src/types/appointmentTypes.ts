@@ -3,7 +3,7 @@ import type {
   createAppointmentSchema,
   updateAppointmentSchema,
   getAppointmentsQuerySchema,
-} from "@src/validations/appointmentValidations";
+} from "../validations/appointmentValidations";
 
 type CreateAppointmentBody = z.infer<typeof createAppointmentSchema>;
 type UpdateAppointmentBody = z.infer<typeof updateAppointmentSchema>;

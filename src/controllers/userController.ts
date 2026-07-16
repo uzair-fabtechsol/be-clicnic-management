@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import catchAsync from "@src/utils/catchAsync";
-import sendResponse from "@src/utils/sendResponse";
+import catchAsync from "../utils/catchAsync";
+import sendResponse from "../utils/sendResponse";
 import {
   createUserService,
   getUsersService,
@@ -8,14 +8,14 @@ import {
   updateUserService,
   deleteUserService,
   setUserActiveStatusService,
-} from "@src/services/userServices";
+} from "../services/userServices";
 import type {
   CreateUserBody,
   UpdateUserBody,
   GetUsersQuery,
   SetUserActiveStatusBody,
   UpdateProfileBody,
-} from "@src/types/userTypes";
+} from "../types/userTypes";
 
 const createUser = catchAsync(
   async (req: Request, res: Response): Promise<void> => {

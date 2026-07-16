@@ -5,9 +5,9 @@ import {
   getRecentPatients,
   getRecentOpdSlips,
   getDoctorsAvailabilityToday,
-} from "@src/controllers/dashboardController";
-import protectMiddleware from "@src/middlewares/protectMiddleware";
-import hasPermissionMiddleware from "@src/middlewares/hasPermissionMiddleware";
+} from "../controllers/dashboardController";
+import protectMiddleware from "../middlewares/protectMiddleware";
+import hasPermissionMiddleware from "../middlewares/hasPermissionMiddleware";
 
 const dashboardRouter = Router();
 

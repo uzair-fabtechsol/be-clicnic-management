@@ -1,7 +1,7 @@
 import { z } from "zod";
 import mongoose from "mongoose";
-import { timeStringToDate } from "@src/utils/time";
-import { APPOINTMENT_STATUSES } from "@src/constants/appointmentConstants";
+import { timeStringToDate } from "../utils/time";
+import { APPOINTMENT_STATUSES } from "../constants/appointmentConstants";
 
 const TIME_REGEX = /^([01]\d|2[0-3]):[0-5]\d$/;
 

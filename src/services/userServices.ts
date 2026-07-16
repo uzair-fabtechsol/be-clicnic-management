@@ -1,13 +1,13 @@
 import bcrypt from "bcryptjs";
-import UserModel from "@src/models/userModel";
-import AppError from "@src/utils/appError";
-import escapeRegex from "@src/utils/escapeRegex";
+import UserModel from "../models/userModel";
+import AppError from "../utils/appError";
+import escapeRegex from "../utils/escapeRegex";
 import type {
   CreateUserBody,
   UpdateUserBody,
   GetUsersQuery,
-} from "@src/types/userTypes";
-import type { Pagination } from "@src/utils/sendResponse";
+} from "../types/userTypes";
+import type { Pagination } from "../utils/sendResponse";
 
 //FUNCTION
 const createUserService = async (body: CreateUserBody) => {

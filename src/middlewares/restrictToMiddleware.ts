@@ -1,5 +1,5 @@
 import { NextFunction, Request, RequestHandler, Response } from "express";
-import AppError from "@src/utils/appError";
+import AppError from "../utils/appError";
 
 const restrictToMiddleware = (...roles: string[]): RequestHandler => {
   return (req: Request, _res: Response, next: NextFunction): void => {

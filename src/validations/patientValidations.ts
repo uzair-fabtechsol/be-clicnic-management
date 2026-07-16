@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { GENDERS, BLOOD_GROUPS } from "@src/constants/patientConstants";
+import { GENDERS, BLOOD_GROUPS } from "../constants/patientConstants";
 
 const CNIC_REGEX = /^\d{5}-\d{7}-\d{1}$/;
 

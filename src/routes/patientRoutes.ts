@@ -5,16 +5,16 @@ import {
   getPatient,
   updatePatient,
   deletePatient,
-} from "@src/controllers/patientController";
-import validationMiddleware from "@src/middlewares/validationMiddleware";
-import protectMiddleware from "@src/middlewares/protectMiddleware";
-import hasPermissionMiddleware from "@src/middlewares/hasPermissionMiddleware";
-import validateObjectIdMiddleware from "@src/middlewares/validateObjectIdMiddleware";
+} from "../controllers/patientController";
+import validationMiddleware from "../middlewares/validationMiddleware";
+import protectMiddleware from "../middlewares/protectMiddleware";
+import hasPermissionMiddleware from "../middlewares/hasPermissionMiddleware";
+import validateObjectIdMiddleware from "../middlewares/validateObjectIdMiddleware";
 import {
   createPatientSchema,
   updatePatientSchema,
   getPatientsQuerySchema,
-} from "@src/validations/patientValidations";
+} from "../validations/patientValidations";
 
 const patientRouter = Router();
 

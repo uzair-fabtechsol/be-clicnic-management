@@ -1,5 +1,5 @@
 import { NextFunction, Request, RequestHandler, Response } from "express";
-import AppError from "@src/utils/appError";
+import AppError from "../utils/appError";
 
 // Admins bypass this check entirely. Receptionists must have an explicit
 // { resource, actions } entry granting the given action on the given

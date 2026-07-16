@@ -5,16 +5,16 @@ import {
   getOpdSlip,
   updateOpdSlip,
   deleteOpdSlip,
-} from "@src/controllers/opdSlipController";
-import validationMiddleware from "@src/middlewares/validationMiddleware";
-import protectMiddleware from "@src/middlewares/protectMiddleware";
-import hasPermissionMiddleware from "@src/middlewares/hasPermissionMiddleware";
-import validateObjectIdMiddleware from "@src/middlewares/validateObjectIdMiddleware";
+} from "../controllers/opdSlipController";
+import validationMiddleware from "../middlewares/validationMiddleware";
+import protectMiddleware from "../middlewares/protectMiddleware";
+import hasPermissionMiddleware from "../middlewares/hasPermissionMiddleware";
+import validateObjectIdMiddleware from "../middlewares/validateObjectIdMiddleware";
 import {
   createOpdSlipSchema,
   updateOpdSlipSchema,
   getOpdSlipsQuerySchema,
-} from "@src/validations/opdSlipValidations";
+} from "../validations/opdSlipValidations";
 
 const opdSlipRouter = Router();
 

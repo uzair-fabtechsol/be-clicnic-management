@@ -1,18 +1,18 @@
 import { Request, Response } from "express";
-import catchAsync from "@src/utils/catchAsync";
-import sendResponse from "@src/utils/sendResponse";
+import catchAsync from "../utils/catchAsync";
+import sendResponse from "../utils/sendResponse";
 import {
   createOpdSlipService,
   getOpdSlipsService,
   getOpdSlipByIdService,
   updateOpdSlipService,
   deleteOpdSlipService,
-} from "@src/services/opdSlipServices";
+} from "../services/opdSlipServices";
 import type {
   CreateOpdSlipBody,
   UpdateOpdSlipBody,
   GetOpdSlipsQuery,
-} from "@src/types/opdSlipTypes";
+} from "../types/opdSlipTypes";
 
 const createOpdSlip = catchAsync(
   async (req: Request, res: Response): Promise<void> => {

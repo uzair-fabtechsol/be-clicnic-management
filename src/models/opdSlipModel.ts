@@ -1,5 +1,5 @@
 import { model, models, Schema, type InferSchemaType } from "mongoose";
-import { VISIT_TYPES, PAYMENT_METHODS } from "@src/constants/opdSlipConstants";
+import { VISIT_TYPES, PAYMENT_METHODS } from "../constants/opdSlipConstants";
 
 const opdSlipSchema = new Schema(
   {

@@ -2,11 +2,11 @@ import { Router } from "express";
 import {
   updateClinicInformation,
   getClinicInformation,
-} from "@src/controllers/clinicInformationController";
-import validationMiddleware from "@src/middlewares/validationMiddleware";
-import protectMiddleware from "@src/middlewares/protectMiddleware";
-import restrictToMiddleware from "@src/middlewares/restrictToMiddleware";
-import { updateClinicInformationSchema } from "@src/validations/clinicInformationValidations";
+} from "../controllers/clinicInformationController";
+import validationMiddleware from "../middlewares/validationMiddleware";
+import protectMiddleware from "../middlewares/protectMiddleware";
+import restrictToMiddleware from "../middlewares/restrictToMiddleware";
+import { updateClinicInformationSchema } from "../validations/clinicInformationValidations";
 
 const clinicInformationRouter = Router();
 

@@ -3,7 +3,7 @@ import type {
   createPatientSchema,
   updatePatientSchema,
   getPatientsQuerySchema,
-} from "@src/validations/patientValidations";
+} from "../validations/patientValidations";
 
 type CreatePatientBody = z.infer<typeof createPatientSchema>;
 type UpdatePatientBody = z.infer<typeof updatePatientSchema>;

@@ -1,16 +1,16 @@
 import { Request, Response } from "express";
-import catchAsync from "@src/utils/catchAsync";
-import sendResponse from "@src/utils/sendResponse";
+import catchAsync from "../utils/catchAsync";
+import sendResponse from "../utils/sendResponse";
 import {
   getBillingsService,
   getBillingByIdService,
   refundBillingService,
   getBillingStatsService,
-} from "@src/services/billingServices";
+} from "../services/billingServices";
 import type {
   GetBillingsQuery,
   RefundBillingBody,
-} from "@src/types/billingTypes";
+} from "../types/billingTypes";
 
 const getBillings = catchAsync(
   async (req: Request, res: Response): Promise<void> => {

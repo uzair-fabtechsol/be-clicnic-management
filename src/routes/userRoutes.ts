@@ -7,19 +7,19 @@ import {
   deleteUser,
   setUserActiveStatus,
   updateProfile,
-} from "@src/controllers/userController";
-import validationMiddleware from "@src/middlewares/validationMiddleware";
-import protectMiddleware from "@src/middlewares/protectMiddleware";
-import hasPermissionMiddleware from "@src/middlewares/hasPermissionMiddleware";
-import restrictToMiddleware from "@src/middlewares/restrictToMiddleware";
-import validateObjectIdMiddleware from "@src/middlewares/validateObjectIdMiddleware";
+} from "../controllers/userController";
+import validationMiddleware from "../middlewares/validationMiddleware";
+import protectMiddleware from "../middlewares/protectMiddleware";
+import hasPermissionMiddleware from "../middlewares/hasPermissionMiddleware";
+import restrictToMiddleware from "../middlewares/restrictToMiddleware";
+import validateObjectIdMiddleware from "../middlewares/validateObjectIdMiddleware";
 import {
   createUserSchema,
   updateUserSchema,
   getUsersQuerySchema,
   setUserActiveStatusSchema,
   updateProfileSchema,
-} from "@src/validations/userValidations";
+} from "../validations/userValidations";
 
 const userRouter = Router();
 
