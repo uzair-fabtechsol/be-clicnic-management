@@ -6,6 +6,7 @@ import AppError from "../utils/appError";
 import generateOpdSlipNumber from "../utils/opdSlipUtils";
 import recordAuditLog from "../utils/auditLog";
 import { createBillingService } from "./billingServices";
+import { updatePatientService } from "./patientServices";
 import type {
   CreateOpdSlipBody,
   UpdateOpdSlipBody,
@@ -47,6 +48,8 @@ const createOpdSlipService = async (
   });
 
   await createBillingService(opdSlip._id.toString());
+
+  await updatePatientService(patient, { lastVisit: new Date() });
 
   await recordAuditLog(
     "opdSlipGenerated",

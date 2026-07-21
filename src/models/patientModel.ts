@@ -51,6 +51,10 @@ const patientSchema = new Schema(
       required: true,
       default: Date.now,
     },
+    lastVisit: {
+      type: Date,
+      default: null,
+    },
   },
   {
     timestamps: true,

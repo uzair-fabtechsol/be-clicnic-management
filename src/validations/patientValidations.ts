@@ -36,6 +36,7 @@ const updatePatientSchema = z.object({
   mobileNumber: z.string().trim().min(1).optional(),
   cnic: cnicSchema,
   address: z.string().trim().min(1).optional(),
+  lastVisit: z.coerce.date().optional(),
 });
 
 const getPatientsQuerySchema = z.object({
