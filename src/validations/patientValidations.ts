@@ -3,18 +3,23 @@ import { GENDERS, AGE_UNITS } from "../constants/patientConstants";
 
 const CNIC_REGEX = /^\d{5}-\d{7}-\d{1}$/;
 
+const cnicSchema = z.preprocess(
+  (val) => (val === "" ? undefined : val),
+  z
+    .string()
+    .trim()
+    .regex(CNIC_REGEX, "Invalid CNIC format, expected XXXXX-XXXXXXX-X")
+    .optional()
+);
+
 const createPatientSchema = z.object({
   name: z.string().trim().min(1, "Name is required"),
   guardianName: z.string().trim().min(1, "Guardian name is required"),
   gender: z.enum(GENDERS),
-  age: z.number().int().min(0, "Age cannot be negative").max(150),
+  age: z.number().min(0, "Age cannot be negative").max(150),
   ageUnit: z.enum(AGE_UNITS),
   mobileNumber: z.string().trim().min(1).optional(),
-  cnic: z
-    .string()
-    .trim()
-    .regex(CNIC_REGEX, "Invalid CNIC format, expected XXXXX-XXXXXXX-X")
-    .optional(),
+  cnic: cnicSchema,
   address: z.string().trim().min(1).optional(),
 });
 
@@ -29,11 +34,7 @@ const updatePatientSchema = z.object({
   age: z.number().int().min(0, "Age cannot be negative").max(150).optional(),
   ageUnit: z.enum(AGE_UNITS).optional(),
   mobileNumber: z.string().trim().min(1).optional(),
-  cnic: z
-    .string()
-    .trim()
-    .regex(CNIC_REGEX, "Invalid CNIC format, expected XXXXX-XXXXXXX-X")
-    .optional(),
+  cnic: cnicSchema,
   address: z.string().trim().min(1).optional(),
 });
 

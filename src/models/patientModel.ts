@@ -40,8 +40,6 @@ const patientSchema = new Schema(
     },
     cnic: {
       type: String,
-      unique: true,
-      sparse: true,
       trim: true,
     },
     address: {
@@ -59,6 +57,8 @@ const patientSchema = new Schema(
     versionKey: false,
   },
 );
+
+patientSchema.index({ cnic: 1 }, { unique: true, sparse: true });
 
 type PatientType = InferSchemaType<typeof patientSchema>;
 
