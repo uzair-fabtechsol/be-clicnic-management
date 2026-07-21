@@ -1,16 +1,7 @@
 const GENDERS = ["male", "female", "other"] as const;
 
-const BLOOD_GROUPS = [
-  "A+",
-  "A-",
-  "B+",
-  "B-",
-  "AB+",
-  "AB-",
-  "O+",
-  "O-",
-] as const;
+const AGE_UNITS = ["years", "months", "days"] as const;
 
-const MR_NUMBER_DIGITS = 8;
+const MR_NUMBER_RANDOM_DIGITS = 4;
 
-export { GENDERS, BLOOD_GROUPS, MR_NUMBER_DIGITS };
+export { GENDERS, AGE_UNITS, MR_NUMBER_RANDOM_DIGITS };

@@ -13,7 +13,7 @@ import type { Pagination } from "../utils/sendResponse";
 //FUNCTION
 const createPatientService = async (
   body: CreatePatientBody,
-  performedBy: string
+  performedBy: string,
 ) => {
   const mrNumber = await generateMrNumber();
 
@@ -23,7 +23,7 @@ const createPatientService = async (
     "patientCreated",
     performedBy,
     patient.mrNumber,
-    `Patient ${patient.name} was registered with MR number ${patient.mrNumber}`
+    `Patient ${patient.name} was registered with MR number ${patient.mrNumber}`,
   );
 
   return { patient };
@@ -31,7 +31,7 @@ const createPatientService = async (
 
 //FUNCTION
 const getPatientsService = async (query: GetPatientsQuery) => {
-  const { page, limit, search, gender, bloodGroup } = query;
+  const { page, limit, search, gender } = query;
   const skip = (page - 1) * limit;
 
   const match: Record<string, unknown> = {};
@@ -40,19 +40,9 @@ const getPatientsService = async (query: GetPatientsQuery) => {
     match.gender = gender;
   }
 
-  if (bloodGroup) {
-    match.bloodGroup = bloodGroup;
-  }
-
   if (search) {
     const searchRegex = new RegExp(escapeRegex(search), "i");
-    match.$or = [
-      { name: searchRegex },
-      { fatherName: searchRegex },
-      { mrNumber: searchRegex },
-      { mobileNumber: searchRegex },
-      { cnic: searchRegex },
-    ];
+    match.$or = [{ mrNumber: searchRegex }, { cnic: searchRegex }];
   }
 
   const [result] = await PatientModel.aggregate([
@@ -98,7 +88,7 @@ const getPatientByIdService = async (patientId: string) => {
 //FUNCTION
 const updatePatientService = async (
   patientId: string,
-  body: UpdatePatientBody
+  body: UpdatePatientBody,
 ) => {
   const patient = await PatientModel.findByIdAndUpdate(patientId, body, {
     new: true,

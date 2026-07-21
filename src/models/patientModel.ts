@@ -1,5 +1,5 @@
 import { model, models, Schema, type InferSchemaType } from "mongoose";
-import { GENDERS, BLOOD_GROUPS } from "../constants/patientConstants";
+import { GENDERS, AGE_UNITS } from "../constants/patientConstants";
 
 const patientSchema = new Schema(
   {
@@ -14,7 +14,7 @@ const patientSchema = new Schema(
       required: true,
       trim: true,
     },
-    fatherName: {
+    guardianName: {
       type: String,
       required: true,
       trim: true,
@@ -29,41 +29,35 @@ const patientSchema = new Schema(
       required: true,
       min: 0,
     },
-    dateOfBirth: {
-      type: Date,
+    ageUnit: {
+      type: String,
+      enum: AGE_UNITS,
       required: true,
     },
     mobileNumber: {
       type: String,
-      required: true,
       trim: true,
     },
     cnic: {
       type: String,
-      required: true,
       unique: true,
-      trim: true,
-    },
-    bloodGroup: {
-      type: String,
-      required: true,
-      enum: BLOOD_GROUPS,
-    },
-    emergencyContact: {
-      type: String,
-      required: true,
+      sparse: true,
       trim: true,
     },
     address: {
       type: String,
-      required: true,
       trim: true,
+    },
+    registrationDate: {
+      type: Date,
+      required: true,
+      default: Date.now,
     },
   },
   {
     timestamps: true,
     versionKey: false,
-  }
+  },
 );
 
 type PatientType = InferSchemaType<typeof patientSchema>;
