@@ -15,9 +15,14 @@ const createPatientService = async (
   body: CreatePatientBody,
   performedBy: string,
 ) => {
-  const mrNumber = await generateMrNumber();
+  const now = new Date();
+  const mrNumber = await generateMrNumber(now);
 
-  const patient = await PatientModel.create({ ...body, mrNumber });
+  const patient = await PatientModel.create({
+    ...body,
+    mrNumber,
+    registrationDate: now,
+  });
 
   await recordAuditLog(
     "patientCreated",
