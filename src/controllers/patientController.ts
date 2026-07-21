@@ -3,6 +3,7 @@ import catchAsync from "../utils/catchAsync";
 import sendResponse from "../utils/sendResponse";
 import {
   createPatientService,
+  createPatientsService,
   getPatientsService,
   getPatientByIdService,
   updatePatientService,
@@ -12,6 +13,7 @@ import type {
   CreatePatientBody,
   UpdatePatientBody,
   GetPatientsQuery,
+  BulkCreatePatientItem,
 } from "../types/patientTypes";
 
 const createPatient = catchAsync(
@@ -24,6 +26,21 @@ const createPatient = catchAsync(
     sendResponse(res, 201, {
       status: "success",
       message: "Patient created successfully",
+      data,
+    });
+  }
+);
+
+const createPatients = catchAsync(
+  async (req: Request, res: Response): Promise<void> => {
+    const body = req.body as BulkCreatePatientItem[];
+    const performedBy = req.user!._id;
+
+    const data = await createPatientsService(body, performedBy);
+
+    sendResponse(res, 201, {
+      status: "success",
+      message: "Patients processed successfully",
       data,
     });
   }
@@ -88,6 +105,7 @@ const deletePatient = catchAsync(
 
 export {
   createPatient,
+  createPatients,
   getPatients,
   getPatient,
   updatePatient,

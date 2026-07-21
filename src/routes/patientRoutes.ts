@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
   createPatient,
+  createPatients,
   getPatients,
   getPatient,
   updatePatient,
@@ -14,6 +15,7 @@ import {
   createPatientSchema,
   updatePatientSchema,
   getPatientsQuerySchema,
+  bulkCreatePatientsSchema,
 } from "../validations/patientValidations";
 
 const patientRouter = Router();
@@ -32,6 +34,14 @@ patientRouter.post(
   hasPermissionMiddleware("patients", "create"),
   validationMiddleware(createPatientSchema),
   createPatient
+);
+
+patientRouter.post(
+  "/bulk",
+  protectMiddleware,
+  hasPermissionMiddleware("patients", "create"),
+  validationMiddleware(bulkCreatePatientsSchema),
+  createPatients
 );
 
 patientRouter.get(

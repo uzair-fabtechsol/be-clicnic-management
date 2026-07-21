@@ -7,6 +7,7 @@ import type {
   CreatePatientBody,
   UpdatePatientBody,
   GetPatientsQuery,
+  BulkCreatePatientItem,
 } from "../types/patientTypes";
 import type { Pagination } from "../utils/sendResponse";
 
@@ -32,6 +33,46 @@ const createPatientService = async (
   );
 
   return { patient };
+};
+
+//FUNCTION
+type BulkCreatePatientResult =
+  | { index: number; success: true; patient: InstanceType<typeof PatientModel> }
+  | { index: number; success: false; error: string };
+
+const createPatientsService = async (
+  bodies: BulkCreatePatientItem[],
+  performedBy: string,
+): Promise<{ results: BulkCreatePatientResult[] }> => {
+  const results: BulkCreatePatientResult[] = [];
+
+  for (let index = 0; index < bodies.length; index++) {
+    const { registrationDate, ...rest } = bodies[index];
+
+    try {
+      const mrNumber = await generateMrNumber(registrationDate);
+
+      const patient = await PatientModel.create({
+        ...rest,
+        mrNumber,
+        registrationDate,
+      });
+
+      await recordAuditLog(
+        "patientCreated",
+        performedBy,
+        patient.mrNumber,
+        `Patient ${patient.name} was registered with MR number ${patient.mrNumber}`,
+      );
+
+      results.push({ index, success: true, patient });
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Failed to create patient";
+      results.push({ index, success: false, error: message });
+    }
+  }
+
+  return { results };
 };
 
 //FUNCTION
@@ -118,6 +159,7 @@ const deletePatientService = async (patientId: string): Promise<void> => {
 
 export {
   createPatientService,
+  createPatientsService,
   getPatientsService,
   getPatientByIdService,
   updatePatientService,
