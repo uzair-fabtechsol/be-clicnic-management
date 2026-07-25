@@ -1,8 +1,8 @@
 import { z } from "zod";
 import { GENDERS, AGE_UNITS } from "../constants/patientConstants";
+import { mobileNumberSchema } from "./commonValidations";
 
 const CNIC_REGEX = /^\d{5}-\d{7}-\d{1}$/;
-const MOBILE_NUMBER_REGEX = /^03\d{2}-\d{7}$/;
 
 const cnicSchema = z.preprocess(
   (val) => (val === "" ? undefined : val),
@@ -10,15 +10,6 @@ const cnicSchema = z.preprocess(
     .string()
     .trim()
     .regex(CNIC_REGEX, "Invalid CNIC format, expected XXXXX-XXXXXXX-X")
-    .optional()
-);
-
-const mobileNumberSchema = z.preprocess(
-  (val) => (val === "" ? undefined : val),
-  z
-    .string()
-    .trim()
-    .regex(MOBILE_NUMBER_REGEX, "Invalid mobile number, expected format 03XX-XXXXXXX")
     .optional()
 );
 

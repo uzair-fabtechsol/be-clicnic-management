@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { DAYS } from "../constants/doctorConstants";
 import { timeStringToDate } from "../utils/time";
+import { requiredMobileNumberSchema } from "./commonValidations";
 
 // Matches the value emitted by <input type="time">, e.g. "08:00", "13:30".
 const TIME_REGEX = /^([01]\d|2[0-3]):[0-5]\d$/;
@@ -25,7 +26,7 @@ const createDoctorSchema = z.object({
   name: z.string().trim().min(1, "Name is required"),
   specialization: z.string().trim().min(1, "Specialization is required"),
   qualification: z.string().trim().min(1, "Qualification is required"),
-  contactNumber: z.string().trim().min(1, "Contact number is required"),
+  contactNumber: requiredMobileNumberSchema,
   email: z.email("Invalid email address").trim().toLowerCase(),
   consultationFee: z.number().min(0, "Consultation fee cannot be negative"),
   active: z.boolean().default(true),
@@ -44,11 +45,7 @@ const updateDoctorSchema = z.object({
     .trim()
     .min(1, "Qualification is required")
     .optional(),
-  contactNumber: z
-    .string()
-    .trim()
-    .min(1, "Contact number is required")
-    .optional(),
+  contactNumber: requiredMobileNumberSchema.optional(),
   email: z.email("Invalid email address").trim().toLowerCase().optional(),
   consultationFee: z
     .number()
