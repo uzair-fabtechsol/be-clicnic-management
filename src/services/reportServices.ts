@@ -18,11 +18,11 @@ const getPatientsReportService = async (
   const skip = (page - 1) * limit;
 
   const [result] = await PatientModel.aggregate([
-    { $match: { createdAt: { $gte: start, $lte: end } } },
+    { $match: { registrationDate: { $gte: start, $lte: end } } },
     {
       $facet: {
         patients: [
-          { $sort: { createdAt: -1 } },
+          { $sort: { registrationDate: -1 } },
           { $skip: skip },
           { $limit: limit },
         ],
