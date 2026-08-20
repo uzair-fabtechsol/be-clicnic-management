@@ -10,7 +10,7 @@ const cnicSchema = z.preprocess(
     .string()
     .trim()
     .regex(CNIC_REGEX, "Invalid CNIC format, expected XXXXX-XXXXXXX-X")
-    .optional()
+    .optional(),
 );
 
 const createPatientSchema = z.object({
@@ -32,7 +32,7 @@ const updatePatientSchema = z.object({
     .min(1, "Guardian name is required")
     .optional(),
   gender: z.enum(GENDERS).optional(),
-  age: z.number().int().min(1, "Age must be greater than 0").max(150).optional(),
+  age: z.number().min(1, "Age must be greater than 0").max(150).optional(),
   ageUnit: z.enum(AGE_UNITS).optional(),
   mobileNumber: mobileNumberSchema,
   cnic: cnicSchema,
