@@ -86,7 +86,9 @@ const createPatientsService = async (
 ): Promise<{ patients: InstanceType<typeof PatientModel>[] }> => {
   const duplicateCnicErrors = await findDuplicateCnicErrors(bodies);
   if (duplicateCnicErrors.length > 0) {
-    throw new AppError(400, "Validation failed", { errors: duplicateCnicErrors });
+    throw new AppError(400, "Validation failed", {
+      errors: duplicateCnicErrors,
+    });
   }
 
   const session = await mongoose.startSession();
@@ -144,7 +146,11 @@ const getPatientsService = async (query: GetPatientsQuery) => {
 
   if (search) {
     const searchRegex = new RegExp(escapeRegex(search), "i");
-    match.$or = [{ mrNumber: searchRegex }, { cnic: searchRegex }];
+    match.$or = [
+      { mrNumber: searchRegex },
+      { cnic: searchRegex },
+      { name: searchRegex },
+    ];
   }
 
   const [result] = await PatientModel.aggregate([
