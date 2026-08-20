@@ -1,3 +1,4 @@
+import type { ClientSession } from "mongoose";
 import PatientModel from "../models/patientModel";
 import AppError from "./appError";
 import { MR_NUMBER_SEQUENCE_DIGITS } from "../constants/patientConstants";
@@ -5,7 +6,10 @@ import { MR_NUMBER_SEQUENCE_DIGITS } from "../constants/patientConstants";
 const MAX_RANDOM = 10 ** MR_NUMBER_SEQUENCE_DIGITS;
 const MAX_ATTEMPTS = 20;
 
-const generateMrNumber = async (date: Date = new Date()): Promise<string> => {
+const generateMrNumber = async (
+  date: Date = new Date(),
+  session?: ClientSession
+): Promise<string> => {
   const year = date.getFullYear().toString().slice(-2);
   const month = (date.getMonth() + 1).toString().padStart(2, "0");
   const prefix = `MR-${year}${month}`;
@@ -26,7 +30,9 @@ const generateMrNumber = async (date: Date = new Date()): Promise<string> => {
       .toString()
       .padStart(MR_NUMBER_SEQUENCE_DIGITS, "0");
     mrNumber = `${prefix}${randomSequence}`;
-    exists = await PatientModel.exists({ mrNumber }).then(Boolean);
+    exists = await PatientModel.exists({ mrNumber })
+      .session(session ?? null)
+      .then(Boolean);
     attempts += 1;
   } while (exists);
 

@@ -40,7 +40,7 @@ const createPatients = catchAsync(
 
     sendResponse(res, 201, {
       status: "success",
-      message: "Patients processed successfully",
+      message: "Patients created successfully",
       data,
     });
   }

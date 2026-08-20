@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import PatientModel from "../models/patientModel";
 import AppError from "../utils/appError";
 import escapeRegex from "../utils/escapeRegex";
@@ -36,43 +37,98 @@ const createPatientService = async (
 };
 
 //FUNCTION
-type BulkCreatePatientResult =
-  | { index: number; success: true; patient: InstanceType<typeof PatientModel> }
-  | { index: number; success: false; error: string };
+const findDuplicateCnicErrors = async (
+  bodies: BulkCreatePatientItem[],
+): Promise<{ index: number; field: string; message: string }[]> => {
+  const errors: { index: number; field: string; message: string }[] = [];
+  const firstIndexByCnic = new Map<string, number>();
 
+  bodies.forEach((body, index) => {
+    if (!body.cnic) return;
+
+    const firstIndex = firstIndexByCnic.get(body.cnic);
+    if (firstIndex === undefined) {
+      firstIndexByCnic.set(body.cnic, index);
+    } else {
+      errors.push({
+        index,
+        field: "cnic",
+        message: `CNIC "${body.cnic}" is duplicated with patient at index ${firstIndex} in this request`,
+      });
+    }
+  });
+
+  const cnicsInBatch = [...firstIndexByCnic.keys()];
+  if (cnicsInBatch.length > 0) {
+    const existingPatients = await PatientModel.find({
+      cnic: { $in: cnicsInBatch },
+    }).select("cnic");
+    const existingCnics = new Set(existingPatients.map((p) => p.cnic));
+
+    bodies.forEach((body, index) => {
+      if (body.cnic && existingCnics.has(body.cnic)) {
+        errors.push({
+          index,
+          field: "cnic",
+          message: `"${body.cnic}" already exists. Please use a different cnic`,
+        });
+      }
+    });
+  }
+
+  return errors.sort((a, b) => a.index - b.index);
+};
+
+//FUNCTION
 const createPatientsService = async (
   bodies: BulkCreatePatientItem[],
   performedBy: string,
-): Promise<{ results: BulkCreatePatientResult[] }> => {
-  const results: BulkCreatePatientResult[] = [];
-
-  for (let index = 0; index < bodies.length; index++) {
-    const { registrationDate, ...rest } = bodies[index];
-
-    try {
-      const mrNumber = await generateMrNumber(registrationDate);
-
-      const patient = await PatientModel.create({
-        ...rest,
-        mrNumber,
-        registrationDate,
-      });
-
-      await recordAuditLog(
-        "patientCreated",
-        performedBy,
-        patient.mrNumber,
-        `Patient ${patient.name} was registered with MR number ${patient.mrNumber}`,
-      );
-
-      results.push({ index, success: true, patient });
-    } catch (error) {
-      const message = error instanceof Error ? error.message : "Failed to create patient";
-      results.push({ index, success: false, error: message });
-    }
+): Promise<{ patients: InstanceType<typeof PatientModel>[] }> => {
+  const duplicateCnicErrors = await findDuplicateCnicErrors(bodies);
+  if (duplicateCnicErrors.length > 0) {
+    throw new AppError(400, "Validation failed", { errors: duplicateCnicErrors });
   }
 
-  return { results };
+  const session = await mongoose.startSession();
+  const patients: InstanceType<typeof PatientModel>[] = [];
+
+  try {
+    await session.withTransaction(async () => {
+      patients.length = 0;
+
+      for (let index = 0; index < bodies.length; index++) {
+        const { registrationDate, ...rest } = bodies[index];
+
+        try {
+          const mrNumber = await generateMrNumber(registrationDate, session);
+
+          const [patient] = await PatientModel.create(
+            [{ ...rest, mrNumber, registrationDate }],
+            { session },
+          );
+
+          await recordAuditLog(
+            "patientCreated",
+            performedBy,
+            patient.mrNumber,
+            `Patient ${patient.name} was registered with MR number ${patient.mrNumber}`,
+            session,
+          );
+
+          patients.push(patient);
+        } catch (error) {
+          if (error instanceof Error) {
+            error.message = `Patient at index ${index}: ${error.message}`;
+          }
+          throw error;
+        }
+      }
+    });
+  } finally {
+    await session.endSession();
+  }
+
+  return { patients };
 };
 
 //FUNCTION
